@@ -1,0 +1,589 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <title>Tcabezon-#A4</title>
+    <link rel="shortcut icon" href="data/firma.png" />
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@100;150;200;250;300;350;400;500;600;900&family=Roboto:wght@100;400;500;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@300;400;500;700;900&family=Noto+Sans:ital@1&display=swap');
+
+        body {
+
+            margin: 0;
+            line-height: normal;
+            font-family: 'Noto Sans Mono', monospace;
+            letter-spacing: 0px;
+            font-weight: 150;
+
+            font-size: 0.9em;
+            text-align: justify;
+            width: 100%;
+        }
+
+        p {
+            text-align: justify;
+            text-justify: inter-word;
+        }
+
+        i {
+            font-style: italic;
+        }
+
+        b {
+            font-weight: 500;
+        }
+
+        h2 {
+            text-decoration: underline;
+        }
+
+        figcaption {
+            font-weight: 500;
+            text-align: center;
+            font-size: 0.8em;
+            padding: 8px;
+            margin-left: 8px;
+        }
+
+        a {
+            text-decoration: none;
+            color: black;
+            font-weight: 350;
+            text-decoration: underline;
+        }
+
+        a:hover {
+            background-color: LavenderBlush;
+            color: black;
+
+            font-weight: 500;
+
+            border: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="content  justify-content-center">
+
+        <div class="container bg-white col-xl-6 col-lg-10 col-md-12">
+
+            <!-- content -->
+            <div class='content'>
+
+                <br><br>
+                <br><br>
+                <br><br>
+                <h1 class="text-center"> GAN photo editing</h1>
+
+                <br>
+
+                <h6 class="text-center">CMU 16-726 Image Synthesis S22 </h6>
+                <h6 class="text-center">Tomas Cabezon Pedroso</h6>
+
+
+                <br>
+
+                <br><br>
+
+
+
+                <br>
+
+                <p>
+                    In this project, we will explore neural style transfer which resembles specific content in a certain
+                    artistic style. For example, generate cat images in Ukiyo-e style. The algorithm takes in a content
+                    image, a style image, and another input image. The input image is optimized to match the previous
+                    two target images in content and style distance space.
+                    <br><br>
+                    In the first part of the assignment, we will start from random noise and optimize it in content
+                    space. It will help us get familiar with the general idea of optimizing pixels with respect to
+                    certain
+                    losses. In the second part of the assignment, you will ignore content for a while and only optimize
+                    to generate textures. This builds some intuitive connection between style-space distance and gram
+                    matrix. Lastly, we combine all of these pieces to perform neural style transfer.
+                    <br><br>
+                    This project is based in two articles by Gatys et al. <a target="_blank"
+                        href="https://arxiv.org/pdf/1505.07376.pdf">Texture Synthesis Using Convolutional Neural
+                        Networks</a> and <a target="_blank" href="https://arxiv.org/pdf/1508.06576.pdf">A Neural
+                        Algorithm of Artistic Style</a>. The oficial Pytorch tutorial can be found <a target="_blank"
+                        href="https://pytorch.org/tutorials/advanced/neural_style_tutorial.html">here</a>.
+
+                </p>
+                <br><br>
+                <h2>Inverting the Generator</h2>
+                <br><br>
+                <p>
+                    For the first part of the assignment, you will implement content-space loss and optimize a random
+                    noise with respect to the content loss only.
+                    <br><br>
+                    <b>Content Loss:</b> The content loss is a metric function that measures the content distance
+                    between two
+                    images at a certain individual layer. Denote the Lth-layer feature of input image X as
+                    f<sub>X</sub><sup>L</sup>and that
+                    of target content image as f<sub>C</sub><sup>L</sup>. The content loss is defined as squared
+                    L2-distance of these two
+                    features:
+                    <br><br>
+                    <img class='d-block float-center mx-auto d-block img-fluid col-5 col-md-3 col-lg-2'
+                        id="equationview" name="equationview"
+                        src="https://latex.codecogs.com/gif.latex?%5Cdpi%7B300%7D%20L%3D%5Cfrac%7B1%7D%7B2%7D%5Csum%28f_X%5EL-f_C%5EL%29%5E%7B2%7D">
+                    <br>
+                    To extract the feature, a VGG-19 net pre-trained on ImageNet is used. The pre-trained VGG-19 net
+                    consists of 5 blocks (conv1-conv5) (with a total of 15 conv layers) and each block serves as a
+                    feature extractor at the different abstract levels. In the following images the influence of the
+                    layer election can be seen, higher layers
+                    capture content better than lower layers. Actually, from conv_1 to conv_3 there is barely
+                    difference, however, on higher layers, for example with conv_11, the content of the image can be
+                    barely seen, and the image is mainly noise.
+                    <br><br>
+                </p>
+
+                <div class="container col-12 align-self-center p-0 m-0">
+
+                    <div class="container col-12 align-self-center p-0 m-0">
+
+                        <div class="row  align-self-center p-0 m-0 ">
+                            <div class="col p-0 m-0">
+                                <img src="images/editing/original_image_2.png"
+                                    class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                <figcaption>Original image A</figcaption>
+                            </div>
+                            <div class="col p-0 m-0">
+                                <img src="images/editing/reconstruction_2_stylegan_w+.png"
+                                    class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                <figcaption>Embedded image A</figcaption>
+                            </div>
+                            <div class="col p-0 m-0">
+                                <img src="images/editing/comb23.gif"
+                                    class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                <figcaption>Interpolation</figcaption>
+                            </div>
+                            <div class="col p-0 m-0">
+                                <img src="images/editing/reconstruction_3_stylegan_w+.png"
+                                    class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                <figcaption>Embedded image B</figcaption>
+                            </div>
+                            <div class="col p-0 m-0">
+                                <img src="images/editing/original_image_3.png"
+                                    class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                <figcaption>Original image B</figcaption>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row  align-self-center p-0 m-0 ">
+                            <div class="col p-0 m-0">
+                                <img src="images/editing/original_image_0.png"
+                                    class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                <figcaption>Original image A</figcaption>
+                            </div>
+                            <div class="col p-0 m-0">
+                                <img src="images/editing/reconstruction_0_stylegan_w+.png"
+                                    class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                <figcaption>Embedded image A</figcaption>
+                            </div>
+                            <div class="col p-0 m-0">
+                                <img src="images/editing/comb01.gif"
+                                    class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                <figcaption>Interpolation</figcaption>
+                            </div>
+                            <div class="col p-0 m-0">
+                                <img src="images/editing/reconstruction_1_stylegan_w+.png"
+                                    class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                <figcaption>Embedded image B</figcaption>
+                            </div>
+                            <div class="col p-0 m-0">
+                                <img src="images/editing/original_image_1.png"
+                                    class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                <figcaption>Original image B</figcaption>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row  align-self-center p-0 m-0 ">
+                            <div class="col p-0 m-0">
+                                <img src="images/editing/original_image_4.png"
+                                    class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                <figcaption>Original image A</figcaption>
+                            </div>
+                            <div class="col p-0 m-0">
+                                <img src="images/editing/reconstruction_4_stylegan_w+.png"
+                                    class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                <figcaption>Embedded image A</figcaption>
+                            </div>
+                            <div class="col p-0 m-0">
+                                <img src="images/editing/comb45.gif"
+                                    class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                <figcaption>Interpolation</figcaption>
+                            </div>
+                            <div class="col p-0 m-0">
+                                <img src="images/editing/reconstruction_5_stylegan_w+.png"
+                                    class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                <figcaption>Embedded image B</figcaption>
+                            </div>
+                            <div class="col p-0 m-0">
+                                <img src="images/editing/original_image_5.png"
+                                    class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                <figcaption>Original image B</figcaption>
+                            </div>
+                        </div>
+
+                    </div>
+                    <br><br>
+                    Conv_5 layer, my favorite, will be used to reconstruct other images from an input noise:
+                    <br><br><br>
+                    <div class="container col-12 align-self-center p-0 m-0">
+                        <div class="row  align-self-center p-0 m-0 ">
+                            <div class="col-4 p-0 m-0">
+                                <img src="images/neuralStyle/content/cr1.png"
+                                    class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                <figcaption>Original image</figcaption>
+                            </div>
+                            <div class="col-4 p-0 m-0">
+                                <img src="images/neuralStyle/output/noise3.png"
+                                    class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                <figcaption>input_noise</figcaption>
+                            </div>
+                            <div class="col-4 p-0 m-0">
+                                <img src="images/neuralStyle/output/noise3_conv5.png"
+                                    class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                <figcaption>conv_5</figcaption>
+                            </div>
+                        </div>
+                        <div class="row  align-self-center p-0 m-0 ">
+                            <div class="col-4 p-0 m-0">
+                                <img src="images/neuralStyle/content/cr2.jpeg"
+                                    class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                <figcaption>Original image</figcaption>
+                            </div>
+                            <div class="col-4 p-0 m-0">
+                                <img src="images/neuralStyle/output/noise_4.png"
+                                    class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                <figcaption>input_noise</figcaption>
+                            </div>
+                            <div class="col-4 p-0 m-0">
+                                <img src="images/neuralStyle/output/noise4_conv5.png"
+                                    class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                <figcaption>conv_5</figcaption>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <br><br>
+                    <h2>Interpolate your Cats</h2>
+                    <br><br>
+                    <p>
+                        Now we will implement style-space loss.
+
+                        <b>Style loss:</b> How do we measure the distance of the styles of two images? In the course, we
+                        discussed
+                        that the Gram matrix is used as a style measurement. Gram matrix is the correlation of two
+                        vectors
+                        on every dimension. Specifically, denote the k-th dimension of the Lth-layer feature of an image
+                        as
+                        f<sup>L</sup><sub>k</sub> in the shape of (N,K,H∗W). Then the gram matrix is
+                        <br><br>
+                        <img class='d-block float-center mx-auto d-block img-fluid col-4 col-md-2 col-lg-2'
+                            id="equationview" name="equationview"
+                            src="https://latex.codecogs.com/gif.latex?%5Cdpi%7B300%7D%20G%3Df_%7Bk%7D%5E%7BL%7D%5Cleft%28f_%7Bk%7D%5E%7BL%7D%5Cright%29%5E%7BT%7D">
+                        <br>
+
+                        in the shape of (N, K, K).
+                        The idea is that two of the gram matrix of our optimized and predicted feature should be as
+                        close as possible. In the following images we can see the influence of the different style
+                        layers selected to generate the texture. Lower layers mantain the color better, while deeper
+                        layer don't mantain them and show more a noisy color. However, deeper layers mantain some
+                        elements, for example, in the bottom left, some eyes can be seen in the texture image.
+
+                        <br><br>
+                    </p>
+
+                    <div class="container col-12 align-self-center p-0 m-0">
+                        <div class="row  align-self-center p-0 m-0 ">
+                            <div class="col-4 p-0 m-0">
+                                <img src="images/neuralStyle/style/cr1.jpeg"
+                                    class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                <figcaption>Original</figcaption>
+                            </div>
+                            <div class="col-4 p-0 m-0">
+                                <img src="images/neuralStyle/output/sty_conv_1.png"
+                                    class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                <figcaption>conv_1</figcaption>
+                            </div>
+                            <div class="col-4 p-0 m-0">
+                                <img src="images/neuralStyle/output/sty_conv_1_2_3.png"
+                                    class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                <figcaption>conv_1 conv_2 conv_3</figcaption>
+                            </div>
+                        </div>
+                        <div class="row  align-self-center p-0 m-0 ">
+                            <div class="col-4 p-0 m-0">
+                                <img src="images/neuralStyle/output/sty_conv_1_2_3_4_5.png"
+                                    class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                <figcaption>conv_1 to conv_5</figcaption>
+                            </div>
+                            <div class="col-4 p-0 m-0">
+                                <img src="images/neuralStyle/output/sty_conv_1_2_3_4_5_6_7.png"
+                                    class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                <figcaption>conv_1 to conv_7</figcaption>
+                            </div>
+                            <div class="col-4 p-0 m-0">
+                                <img src="images/neuralStyle/output/sty_conv_5_6_7.png"
+                                    class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                <figcaption>conv_5 conv_6 conv_7</figcaption>
+                            </div>
+
+                        </div>
+                        <div class="row  align-self-center p-0 m-0 ">
+                            <div class="col-4 p-0 m-0">
+                                <img src="images/neuralStyle/output/sty_conv_1-10.png"
+                                    class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                <figcaption>conv_1 to conv_10</figcaption>
+                            </div>
+                            <div class="col-4 p-0 m-0">
+                                <img src="images/neuralStyle/output/sty_conv_7-10.png"
+                                    class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                <figcaption>conv_7 to conv_10</figcaption>
+                            </div>
+                            <div class="col-4 p-0 m-0">
+                                <img src="images/neuralStyle/output/sty_conv_10-13.png"
+                                    class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                <figcaption>conv_10 to conv_13</figcaption>
+                            </div>
+                        </div>
+                        <p>
+
+
+                            <br><br>
+                            The results using the layers from conv_1 to conv_7 are the favorites, so this arrangement
+                            will
+                            be used to generate textures from noise.
+                            <br><br>
+                        </p>
+                        <div class="container col-12 align-self-center p-0 m-0">
+                            <div class="row  align-self-center p-0 m-0 ">
+                                <div class="col-4 p-0 m-0">
+                                    <img src="images/neuralStyle/style/picasso copy.jpg"
+                                        class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                    <figcaption>Original image</figcaption>
+                                </div>
+                                <div class="col-4 p-0 m-0">
+                                    <img src="images/neuralStyle/output/sn1.png"
+                                        class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                    <figcaption>input_noise</figcaption>
+                                </div>
+                                <div class="col-4 p-0 m-0">
+                                    <img src="images/neuralStyle/output/sn1_conv_.png"
+                                        class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                    <figcaption>conv_5</figcaption>
+                                </div>
+                            </div>
+                            <div class="row  align-self-center p-0 m-0 ">
+                                <div class="col-4 p-0 m-0">
+                                    <img src="images/neuralStyle/style/the_scream copy.jpeg"
+                                        class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                    <figcaption>Original image</figcaption>
+                                </div>
+                                <div class="col-4 p-0 m-0">
+                                    <img src="images/neuralStyle/output/sn2.png"
+                                        class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                    <figcaption>input_noise</figcaption>
+                                </div>
+                                <div class="col-4 p-0 m-0">
+                                    <img src="images/neuralStyle/output/sn2_conv_.png"
+                                        class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                    <figcaption>conv_5</figcaption>
+                                </div>
+                            </div>
+                        </div>
+
+                        <br><br>
+                        <h2>Style transfer</h2>
+                        <br><br>
+                        <p>
+                            Finally, it is time to put pieces together! We will use conv_5 as content feature and
+                            conv_1-conv_7 as style feature. The style weight is set to 1000000 and the content weight is
+                            set to 1. We use L-BFGS optimizer to and optimized input image for 300 steps.
+                            <br><br>
+                            The following images show the style transfer of two different styles on two different
+                            images.
+
+                            <br><br>
+                        </p>
+
+                        <div class="container col-12 align-self-center p-0 m-0">
+                            <div class="row  align-self-center p-0 m-0 ">
+                                <div class="col-4 p-0 m-0">
+
+                                </div>
+                                <div class="col-4 p-0 m-0">
+                                    <img src="images/neuralStyle/style/cr1.jpeg"
+                                        class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                    <figcaption>Style 1</figcaption>
+                                </div>
+                                <div class="col-4 p-0 m-0">
+                                    <img src="images/neuralStyle/style/the_scream copy.jpeg"
+                                        class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                    <figcaption>Style 2</figcaption>
+                                </div>
+                            </div>
+                            <div class="row  align-self-center p-0 m-0 ">
+                                <div class="col-4 p-0 m-0">
+                                    <img src="images/neuralStyle/content/dancing.jpg"
+                                        class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                    <figcaption>Original image</figcaption>
+                                </div>
+                                <div class="col-4 p-0 m-0">
+                                    <img src="images/neuralStyle/output/ci_k.png"
+                                        class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                    <figcaption></figcaption>
+                                </div>
+                                <div class="col-4 p-0 m-0">
+                                    <img src="images/neuralStyle/output/ci_s.png"
+                                        class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                    <figcaption></figcaption>
+                                </div>
+                            </div>
+                            <div class="row  align-self-center p-0 m-0 ">
+                                <div class="col-4 p-0 m-0">
+                                    <img src="images/neuralStyle/content/cr1.png"
+                                        class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                    <figcaption>Original image</figcaption>
+                                </div>
+                                <div class="col-4 p-0 m-0">
+                                    <img src="images/neuralStyle/output/ci_k2.png"
+                                        class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                    <figcaption></figcaption>
+                                </div>
+                                <div class="col-4 p-0 m-0">
+                                    <img src="images/neuralStyle/output/ci_s2.png"
+                                        class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                    <figcaption></figcaption>
+                                </div>
+                            </div>
+
+                        </div>
+                        <p>
+                            <br><br>
+                            In the following images the influence between the noise and content image initialization can
+                            be
+                            seen. In terms of time both take the same time, however, if we tried different number of
+                            epochs
+                            to change the results, the times may change. On the other hand, we can see that the content
+                            initialization mantains the texture better, actually, in the sky, we can see similar strokes
+                            as
+                            the ones in Van Gogh's masterpiece. Furthermore, the overall structure of the image is
+                            better,
+                            the elements can be better distinguised.
+                            <br><br><br>
+                        </p>
+
+                        <div class="container col-12 align-self-center p-0 m-0">
+                            <div class="row  align-self-center p-0 m-0 ">
+                                <div class="col-1 p-0 m-0"></div>
+                                <div class="col-5 p-0 m-0">
+                                    <img src="images/neuralStyle/style/starry_night copy.jpeg"
+                                        class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                    <figcaption>Style image</figcaption>
+                                </div>
+                                <div class="col-5 p-0 m-0">
+                                    <img src="images/neuralStyle/content/tubingen.jpeg"
+                                        class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                    <figcaption>Content Image</figcaption>
+                                </div>
+                            </div>
+                            <div class="row  align-self-center p-0 m-0 ">
+                                <div class="col-1 p-0 m-0"></div>
+                                <div class="col-5 p-0 m-0">
+                                    <img src="images/neuralStyle/output/noise.png"
+                                        class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                    <figcaption>Noise image initialization<br>(CPU times: user 25.3 s)</figcaption>
+                                </div>
+                                <div class="col-5 p-0 m-0">
+                                    <img src="images/neuralStyle/output/content.png"
+                                        class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                    <figcaption>Content image initialization <br>(Wall time: 25.9 s)</figcaption>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                        <br><br>
+                        Now let's try this style transfer on... Kiki! She is always around while I do the homework, so
+                        she will enjoy seeing herself in different styles!
+                        <br><br><br>
+                        <div class="row  align-self-center p-0 m-0 ">
+                            <div class="col-4 p-0 m-0">
+                                <img src="images/neuralStyle/content/kiki1.jpeg"
+                                    class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                <figcaption>Kiki</figcaption>
+                            </div>
+                            <div class="col-4 p-0 m-0">
+                                <img src="images/neuralStyle/style/frida_kahlo.jpeg"
+                                    class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                <figcaption> Style (Kahlo)</figcaption>
+                            </div>
+                            <div class="col-4 p-0 m-0">
+                                <img src="images/neuralStyle/output/kiki2_k.png"
+                                    class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                <figcaption>Kiki Kahlo</figcaption>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row  align-self-center p-0 m-0 ">
+                            <div class="col-4 p-0 m-0">
+                                <img src="images/neuralStyle/content/kiki3.jpeg"
+                                    class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                <figcaption>Kiki</figcaption>
+                            </div>
+                            <div class="col-4 p-0 m-0">
+                                <img src="images/neuralStyle/style/la_maja.jpeg"
+                                    class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                <figcaption> Style (La Maja Vestida de Goya)</figcaption>
+                            </div>
+                            <div class="col-4 p-0 m-0">
+                                <img src="images/neuralStyle/output/kiki_g.png"
+                                    class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                <figcaption>La Maja Kiki</figcaption>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row  align-self-center p-0 m-0 ">
+                            <div class="col-4 p-0 m-0">
+                                <img src="images/neuralStyle/content/kiki2.jpeg"
+                                    class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                <figcaption>Kiki</figcaption>
+                            </div>
+                            <div class="col-4 p-0 m-0">
+                                <img src="images/neuralStyle/style/miro-3.png"
+                                    class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                <figcaption> Style (Miro)</figcaption>
+                            </div>
+                            <div class="col-4 p-0 m-0">
+                                <img src="images/neuralStyle/output/kikiM.png"
+                                    class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                <figcaption>Kiki Miro</figcaption>
+                            </div>
+                        </div>
+                        </p>
+
+                        <br><br><br><br>
+                        <p class=footer>©Tomas Cabezon Pedroso, 2021</p>
+
+
+
+                    </div> <!-- end content -->
+                </div>
+</body>
+
+</html>
