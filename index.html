@@ -424,763 +424,842 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                <br><br>
+                <p>
+                    In the top right images we can see how the plants disapear on the embedded images, this is a
+                    good example of how stylegans keep the important overall features of the data they are trained
+                    on but dont learn smaller details.
+                </p>
+
+                <br><br><br>
+                <h2>Scribble to Image</h2>
+                <br>
+                <br>
+                <p>
+                    We can treat the scribble similar to the input reconstruction. In this part, we have a scribble
+                    and a mask, so we can modify the latent vector to yield an image that looks like the scribble.To
+                    generate an image subject to constraints, we solve a penalized non-convex optimization problem.
+                    We’ll assume the constraints are of the form
+                    <span class="math" id="MathJax-Span-128" style="width: 4.549em; display: inline-block;"><span
+                            style="display: inline-block; position: relative; width: 3.693em; height: 0px; font-size: 123%;"><span
+                                style="position: absolute; clip: rect(1.714em, 1003.69em, 2.944em, -999.997em); top: -2.565em; left: 0em;"><span
+                                    class="mrow" id="MathJax-Span-129"><span class="texatom" id="MathJax-Span-130"><span
+                                            class="mrow" id="MathJax-Span-131"><span class="msubsup"
+                                                id="MathJax-Span-132"><span
+                                                    style="display: inline-block; position: relative; width: 0.538em; height: 0px;"><span
+                                                        style="position: absolute; clip: rect(3.158em, 1000.43em, 4.389em, -999.997em); top: -4.009em; left: 0em;"><span
+                                                            class="mi" id="MathJax-Span-133"
+                                                            style="font-family: STIXGeneral-Italic;">f<span
+                                                                style="display: inline-block; overflow: hidden; height: 1px; width: 0.163em;"></span></span><span
+                                                            style="display: inline-block; width: 0px; height: 4.014em;"></span></span><span
+                                                        style="position: absolute; top: -3.848em; left: 0.27em;"><span
+                                                            class="mi" id="MathJax-Span-134"
+                                                            style="font-size: 70.7%; font-family: STIXGeneral-Italic;">i</span><span
+                                                            style="display: inline-block; width: 0px; height: 4.014em;"></span></span></span></span><span
+                                                class="mo" id="MathJax-Span-135"
+                                                style="font-family: STIXGeneral-Regular;">(</span><span class="mi"
+                                                id="MathJax-Span-136" style="font-family: STIXGeneral-Italic;">x<span
+                                                    style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span><span
+                                                class="mo" id="MathJax-Span-137"
+                                                style="font-family: STIXGeneral-Regular;">)</span><span class="mo"
+                                                id="MathJax-Span-138"
+                                                style="font-family: STIXGeneral-Regular; padding-left: 0.324em;">=</span><span
+                                                class="msubsup" id="MathJax-Span-139"
+                                                style="padding-left: 0.324em;"><span
+                                                    style="display: inline-block; position: relative; width: 0.698em; height: 0px;"><span
+                                                        style="position: absolute; clip: rect(3.426em, 1000.43em, 4.175em, -999.997em); top: -4.009em; left: 0em;"><span
+                                                            class="mi" id="MathJax-Span-140"
+                                                            style="font-family: STIXGeneral-Italic;">v</span><span
+                                                            style="display: inline-block; width: 0px; height: 4.014em;"></span></span><span
+                                                        style="position: absolute; top: -3.848em; left: 0.431em;"><span
+                                                            class="mi" id="MathJax-Span-141"
+                                                            style="font-size: 70.7%; font-family: STIXGeneral-Italic;">i</span><span
+                                                            style="display: inline-block; width: 0px; height: 4.014em;"></span></span></span></span></span></span></span><span
+                                    style="display: inline-block; width: 0px; height: 2.57em;"></span></span></span><span
+                            style="display: inline-block; overflow: hidden; vertical-align: -0.326em; border-left: 0px solid; width: 0px; height: 1.253em;"></span></span>
+                    for some scalar-valued functions
+                    <span class="math" id="MathJax-Span-142" style="width: 0.698em; display: inline-block;"><span
+                            style="display: inline-block; position: relative; width: 0.538em; height: 0px; font-size: 123%;"><span
+                                style="position: absolute; clip: rect(1.5em, 1000.54em, 2.731em, -999.997em); top: -2.351em; left: 0em;"><span
+                                    class="mrow" id="MathJax-Span-143"><span class="msubsup" id="MathJax-Span-144"><span
+                                            style="display: inline-block; position: relative; width: 0.538em; height: 0px;"><span
+                                                style="position: absolute; clip: rect(3.158em, 1000.43em, 4.389em, -999.997em); top: -4.009em; left: 0em;"><span
+                                                    class="mi" id="MathJax-Span-145"
+                                                    style="font-family: STIXGeneral-Italic;">f<span
+                                                        style="display: inline-block; overflow: hidden; height: 1px; width: 0.163em;"></span></span><span
+                                                    style="display: inline-block; width: 0px; height: 4.014em;"></span></span><span
+                                                style="position: absolute; top: -3.848em; left: 0.27em;"><span
+                                                    class="mi" id="MathJax-Span-146"
+                                                    style="font-size: 70.7%; font-family: STIXGeneral-Italic;">i</span><span
+                                                    style="display: inline-block; width: 0px; height: 4.014em;"></span></span></span></span></span><span
+                                    style="display: inline-block; width: 0px; height: 2.356em;"></span></span></span><span
+                            style="display: inline-block; overflow: hidden; vertical-align: -0.326em; border-left: 0px solid; width: 0px; height: 1.253em;"></span></span>
+                    and scalar values
+                    <span class="math" id="MathJax-Span-147" style="width: 0.858em; display: inline-block;"><span
+                            style="display: inline-block; position: relative; width: 0.698em; height: 0px; font-size: 123%;"><span
+                                style="position: absolute; clip: rect(1.768em, 1000.7em, 2.677em, -999.997em); top: -2.351em; left: 0em;"><span
+                                    class="mrow" id="MathJax-Span-148"><span class="msubsup" id="MathJax-Span-149"><span
+                                            style="display: inline-block; position: relative; width: 0.698em; height: 0px;"><span
+                                                style="position: absolute; clip: rect(3.426em, 1000.43em, 4.175em, -999.997em); top: -4.009em; left: 0em;"><span
+                                                    class="mi" id="MathJax-Span-150"
+                                                    style="font-family: STIXGeneral-Italic;">v</span><span
+                                                    style="display: inline-block; width: 0px; height: 4.014em;"></span></span><span
+                                                style="position: absolute; top: -3.848em; left: 0.431em;"><span
+                                                    class="mi" id="MathJax-Span-151"
+                                                    style="font-size: 70.7%; font-family: STIXGeneral-Italic;">i</span><span
+                                                    style="display: inline-block; width: 0px; height: 4.014em;"></span></span></span></span></span><span
+                                    style="display: inline-block; width: 0px; height: 2.356em;"></span></span></span><span
+                            style="display: inline-block; overflow: hidden; vertical-align: -0.26em; border-left: 0px solid; width: 0px; height: 0.859em;"></span></span>.
+                    Written in a form that includes our trained generator G, this soft-constrained optimization
+                    <span class="MathJax" id="MathJax-Element-16-Frame" tabindex="0"
+                        data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><mi>G</mi></math>"
+                        role="presentation" style="position: relative;">
+                        <nobr aria-hidden="true"><span class="math" id="MathJax-Span-152"
+                                style="width: 0.965em; display: inline-block;"><span
+                                    style="display: inline-block; position: relative; width: 0.751em; height: 0px; font-size: 123%;"><span
+                                        style="position: absolute; clip: rect(1.768em, 1000.75em, 2.731em, -999.997em); top: -2.565em; left: 0em;"><span
+                                            class="mrow" id="MathJax-Span-153"><span class="mi" id="MathJax-Span-154"
+                                                style="font-family: STIXGeneral-Italic;">G</span></span><span
+                                            style="display: inline-block; width: 0px; height: 2.57em;"></span></span></span><span
+                                    style="display: inline-block; overflow: hidden; vertical-align: -0.063em; border-left: 0px solid; width: 0px; height: 0.99em;"></span></span>
+                        </nobr><span class="MJX_Assistive_MathML" role="presentation"><math
+                                xmlns="http://www.w3.org/1998/Math/MathML">
+
+                            </math></span>
+                    </span>
+                    problem is:
                     <br><br>
-                    <p>
-                        In the top right images we can see how the plants disapear on the embedded images, this is a
-                        good example of how stylegans keep the important overall features of the data they are trained
-                        on but dont learn smaller details.
-                    </p>
+                <div class="MathJax_Display" style="text-align: center;"><span class="MathJax"
+                        id="MathJax-Element-17-Frame" tabindex="0"
+                        data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot; display=&quot;block&quot;><msup><mi>z</mi><mo>&amp;#x2217;</mo></msup><mo>=</mo><msub><mi>arg min</mi><mrow class=&quot;MJX-TeXAtom-ORD&quot;><mi>z</mi></mrow></msub><mo>&amp;#x2061;</mo><munder><mo>&amp;#x2211;</mo><mi>i</mi></munder><mrow class=&quot;MJX-TeXAtom-ORD&quot;><mo stretchy=&quot;false&quot;>|</mo></mrow><mrow class=&quot;MJX-TeXAtom-ORD&quot;><mo stretchy=&quot;false&quot;>|</mo></mrow><msub><mi>f</mi><mi>i</mi></msub><mo stretchy=&quot;false&quot;>(</mo><mi>G</mi><mo stretchy=&quot;false&quot;>(</mo><mi>z</mi><mo stretchy=&quot;false&quot;>)</mo><mo stretchy=&quot;false&quot;>)</mo><mo>&amp;#x2212;</mo><msub><mi>v</mi><mi>i</mi></msub><mrow class=&quot;MJX-TeXAtom-ORD&quot;><mo stretchy=&quot;false&quot;>|</mo></mrow><msub><mrow class=&quot;MJX-TeXAtom-ORD&quot;><mo stretchy=&quot;false&quot;>|</mo></mrow><mn>1</mn></msub><mo>.</mo></math>"
+                        role="presentation" style="text-align: center; position: relative;">
+                        <nobr aria-hidden="true"><span class="math" id="MathJax-Span-155"
+                                style="width: 17.493em; display: inline-block;"><span
+                                    style="display: inline-block; position: relative; width: 14.23em; height: 0px; font-size: 123%;"><span
+                                        style="position: absolute; clip: rect(1.447em, 1014.18em, 4.014em, -999.997em); top: -2.565em; left: 0em;"><span
+                                            class="mrow" id="MathJax-Span-156"><span class="msubsup"
+                                                id="MathJax-Span-157"><span
+                                                    style="display: inline-block; position: relative; width: 0.858em; height: 0px;"><span
+                                                        style="position: absolute; clip: rect(3.426em, 1000.38em, 4.282em, -999.997em); top: -4.009em; left: 0em;"><span
+                                                            class="mi" id="MathJax-Span-158"
+                                                            style="font-family: STIXGeneral-Italic;">z</span><span
+                                                            style="display: inline-block; width: 0px; height: 4.014em;"></span></span><span
+                                                        style="position: absolute; top: -4.437em; left: 0.377em;"><span
+                                                            class="mo" id="MathJax-Span-159"
+                                                            style="font-size: 70.7%; font-family: STIXGeneral-Regular;">∗</span><span
+                                                            style="display: inline-block; width: 0px; height: 4.014em;"></span></span></span></span><span
+                                                class="mo" id="MathJax-Span-160"
+                                                style="font-family: STIXGeneral-Regular; padding-left: 0.324em;">=</span><span
+                                                class="msubsup" id="MathJax-Span-161"
+                                                style="padding-left: 0.324em;"><span
+                                                    style="display: inline-block; position: relative; width: 3.426em; height: 0px;"><span
+                                                        style="position: absolute; clip: rect(3.158em, 1003.05em, 4.389em, -999.997em); top: -4.009em; left: 0em;"><span
+                                                            class="mi" id="MathJax-Span-162"
+                                                            style="font-family: STIXGeneral-Regular;">arg
+                                                            min</span><span
+                                                            style="display: inline-block; width: 0px; height: 4.014em;"></span></span><span
+                                                        style="position: absolute; top: -3.741em; left: 3.105em;"><span
+                                                            class="texatom" id="MathJax-Span-163"><span class="mrow"
+                                                                id="MathJax-Span-164"><span class="mi"
+                                                                    id="MathJax-Span-165"
+                                                                    style="font-size: 70.7%; font-family: STIXGeneral-Italic;">z</span></span></span><span
+                                                            style="display: inline-block; width: 0px; height: 4.014em;"></span></span></span></span><span
+                                                class="mo" id="MathJax-Span-166"></span><span class="munderover"
+                                                id="MathJax-Span-167" style="padding-left: 0.217em;"><span
+                                                    style="display: inline-block; position: relative; width: 1.286em; height: 0px;"><span
+                                                        style="position: absolute; clip: rect(2.891em, 1001.18em, 4.656em, -999.997em); top: -4.009em; left: 0em;"><span
+                                                            class="mo" id="MathJax-Span-168"
+                                                            style="font-family: STIXSizeOneSym; vertical-align: -0.532em;">∑</span><span
+                                                            style="display: inline-block; width: 0px; height: 4.014em;"></span></span><span
+                                                        style="position: absolute; clip: rect(3.372em, 1000.16em, 4.282em, -999.997em); top: -2.832em; left: 0.538em;"><span
+                                                            class="mi" id="MathJax-Span-169"
+                                                            style="font-size: 70.7%; font-family: STIXGeneral-Italic;">i</span><span
+                                                            style="display: inline-block; width: 0px; height: 4.014em;"></span></span></span></span><span
+                                                class="texatom" id="MathJax-Span-170"
+                                                style="padding-left: 0.217em;"><span class="mrow"
+                                                    id="MathJax-Span-171"><span class="mo" id="MathJax-Span-172"
+                                                        style="font-family: STIXVariants;">|</span></span></span><span
+                                                class="texatom" id="MathJax-Span-173"><span class="mrow"
+                                                    id="MathJax-Span-174"><span class="mo" id="MathJax-Span-175"
+                                                        style="font-family: STIXVariants;">|</span></span></span><span
+                                                class="msubsup" id="MathJax-Span-176"><span
+                                                    style="display: inline-block; position: relative; width: 0.538em; height: 0px;"><span
+                                                        style="position: absolute; clip: rect(3.158em, 1000.43em, 4.389em, -999.997em); top: -4.009em; left: 0em;"><span
+                                                            class="mi" id="MathJax-Span-177"
+                                                            style="font-family: STIXGeneral-Italic;">f<span
+                                                                style="display: inline-block; overflow: hidden; height: 1px; width: 0.163em;"></span></span><span
+                                                            style="display: inline-block; width: 0px; height: 4.014em;"></span></span><span
+                                                        style="position: absolute; top: -3.848em; left: 0.27em;"><span
+                                                            class="mi" id="MathJax-Span-178"
+                                                            style="font-size: 70.7%; font-family: STIXGeneral-Italic;">i</span><span
+                                                            style="display: inline-block; width: 0px; height: 4.014em;"></span></span></span></span><span
+                                                class="mo" id="MathJax-Span-179"
+                                                style="font-family: STIXGeneral-Regular;">(</span><span class="mi"
+                                                id="MathJax-Span-180"
+                                                style="font-family: STIXGeneral-Italic;">G</span><span class="mo"
+                                                id="MathJax-Span-181"
+                                                style="font-family: STIXGeneral-Regular;">(</span><span class="mi"
+                                                id="MathJax-Span-182"
+                                                style="font-family: STIXGeneral-Italic;">z</span><span class="mo"
+                                                id="MathJax-Span-183"
+                                                style="font-family: STIXGeneral-Regular;">)</span><span class="mo"
+                                                id="MathJax-Span-184"
+                                                style="font-family: STIXGeneral-Regular;">)</span><span class="mo"
+                                                id="MathJax-Span-185"
+                                                style="font-family: STIXGeneral-Regular; padding-left: 0.27em;">−</span><span
+                                                class="msubsup" id="MathJax-Span-186"
+                                                style="padding-left: 0.27em;"><span
+                                                    style="display: inline-block; position: relative; width: 0.698em; height: 0px;"><span
+                                                        style="position: absolute; clip: rect(3.426em, 1000.43em, 4.175em, -999.997em); top: -4.009em; left: 0em;"><span
+                                                            class="mi" id="MathJax-Span-187"
+                                                            style="font-family: STIXGeneral-Italic;">v</span><span
+                                                            style="display: inline-block; width: 0px; height: 4.014em;"></span></span><span
+                                                        style="position: absolute; top: -3.848em; left: 0.431em;"><span
+                                                            class="mi" id="MathJax-Span-188"
+                                                            style="font-size: 70.7%; font-family: STIXGeneral-Italic;">i</span><span
+                                                            style="display: inline-block; width: 0px; height: 4.014em;"></span></span></span></span><span
+                                                class="texatom" id="MathJax-Span-189"><span class="mrow"
+                                                    id="MathJax-Span-190"><span class="mo" id="MathJax-Span-191"
+                                                        style="font-family: STIXVariants;">|</span></span></span><span
+                                                class="msubsup" id="MathJax-Span-192"><span
+                                                    style="display: inline-block; position: relative; width: 0.751em; height: 0px;"><span
+                                                        style="position: absolute; clip: rect(3.158em, 1000.22em, 4.389em, -999.997em); top: -4.009em; left: 0em;"><span
+                                                            class="texatom" id="MathJax-Span-193"><span class="mrow"
+                                                                id="MathJax-Span-194"><span class="mo"
+                                                                    id="MathJax-Span-195"
+                                                                    style="font-family: STIXVariants;">|</span></span></span><span
+                                                            style="display: inline-block; width: 0px; height: 4.014em;"></span></span><span
+                                                        style="position: absolute; top: -3.795em; left: 0.324em;"><span
+                                                            class="mn" id="MathJax-Span-196"
+                                                            style="font-size: 70.7%; font-family: STIXGeneral-Regular;">1</span><span
+                                                            style="display: inline-block; width: 0px; height: 4.014em;"></span></span></span></span><span
+                                                class="mo" id="MathJax-Span-197"
+                                                style="font-family: STIXGeneral-Regular;">.</span></span><span
+                                            style="display: inline-block; width: 0px; height: 2.57em;"></span></span></span><span
+                                    style="display: inline-block; overflow: hidden; vertical-align: -1.641em; border-left: 0px solid; width: 0px; height: 2.898em;"></span></span>
+                        </nobr><span class="MJX_Assistive_MathML MJX_Assistive_MathML_Block" role="presentation"><math
+                                xmlns="http://www.w3.org/1998/Math/MathML" display="block">
 
-                    <br><br><br>
-                    <h2>Scribble to Image</h2>
-                    <br>
-                    <br>
-                    <p>
-                        We can treat the scribble similar to the input reconstruction. In this part, we have a scribble
-                        and a mask, so we can modify the latent vector to yield an image that looks like the scribble.To
-                        generate an image subject to constraints, we solve a penalized non-convex optimization problem.
-                        We’ll assume the constraints are of the form
-                        <span class="math" id="MathJax-Span-128" style="width: 4.549em; display: inline-block;"><span
-                                style="display: inline-block; position: relative; width: 3.693em; height: 0px; font-size: 123%;"><span
-                                    style="position: absolute; clip: rect(1.714em, 1003.69em, 2.944em, -999.997em); top: -2.565em; left: 0em;"><span
-                                        class="mrow" id="MathJax-Span-129"><span class="texatom"
-                                            id="MathJax-Span-130"><span class="mrow" id="MathJax-Span-131"><span
-                                                    class="msubsup" id="MathJax-Span-132"><span
-                                                        style="display: inline-block; position: relative; width: 0.538em; height: 0px;"><span
-                                                            style="position: absolute; clip: rect(3.158em, 1000.43em, 4.389em, -999.997em); top: -4.009em; left: 0em;"><span
-                                                                class="mi" id="MathJax-Span-133"
-                                                                style="font-family: STIXGeneral-Italic;">f<span
-                                                                    style="display: inline-block; overflow: hidden; height: 1px; width: 0.163em;"></span></span><span
-                                                                style="display: inline-block; width: 0px; height: 4.014em;"></span></span><span
-                                                            style="position: absolute; top: -3.848em; left: 0.27em;"><span
-                                                                class="mi" id="MathJax-Span-134"
-                                                                style="font-size: 70.7%; font-family: STIXGeneral-Italic;">i</span><span
-                                                                style="display: inline-block; width: 0px; height: 4.014em;"></span></span></span></span><span
-                                                    class="mo" id="MathJax-Span-135"
-                                                    style="font-family: STIXGeneral-Regular;">(</span><span class="mi"
-                                                    id="MathJax-Span-136"
-                                                    style="font-family: STIXGeneral-Italic;">x<span
-                                                        style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span><span
-                                                    class="mo" id="MathJax-Span-137"
-                                                    style="font-family: STIXGeneral-Regular;">)</span><span class="mo"
-                                                    id="MathJax-Span-138"
-                                                    style="font-family: STIXGeneral-Regular; padding-left: 0.324em;">=</span><span
-                                                    class="msubsup" id="MathJax-Span-139"
-                                                    style="padding-left: 0.324em;"><span
-                                                        style="display: inline-block; position: relative; width: 0.698em; height: 0px;"><span
-                                                            style="position: absolute; clip: rect(3.426em, 1000.43em, 4.175em, -999.997em); top: -4.009em; left: 0em;"><span
-                                                                class="mi" id="MathJax-Span-140"
-                                                                style="font-family: STIXGeneral-Italic;">v</span><span
-                                                                style="display: inline-block; width: 0px; height: 4.014em;"></span></span><span
-                                                            style="position: absolute; top: -3.848em; left: 0.431em;"><span
-                                                                class="mi" id="MathJax-Span-141"
-                                                                style="font-size: 70.7%; font-family: STIXGeneral-Italic;">i</span><span
-                                                                style="display: inline-block; width: 0px; height: 4.014em;"></span></span></span></span></span></span></span><span
-                                        style="display: inline-block; width: 0px; height: 2.57em;"></span></span></span><span
-                                style="display: inline-block; overflow: hidden; vertical-align: -0.326em; border-left: 0px solid; width: 0px; height: 1.253em;"></span></span>
-                        for some scalar-valued functions
-                        <span class="math" id="MathJax-Span-142" style="width: 0.698em; display: inline-block;"><span
-                                style="display: inline-block; position: relative; width: 0.538em; height: 0px; font-size: 123%;"><span
-                                    style="position: absolute; clip: rect(1.5em, 1000.54em, 2.731em, -999.997em); top: -2.351em; left: 0em;"><span
-                                        class="mrow" id="MathJax-Span-143"><span class="msubsup"
-                                            id="MathJax-Span-144"><span
-                                                style="display: inline-block; position: relative; width: 0.538em; height: 0px;"><span
-                                                    style="position: absolute; clip: rect(3.158em, 1000.43em, 4.389em, -999.997em); top: -4.009em; left: 0em;"><span
-                                                        class="mi" id="MathJax-Span-145"
-                                                        style="font-family: STIXGeneral-Italic;">f<span
-                                                            style="display: inline-block; overflow: hidden; height: 1px; width: 0.163em;"></span></span><span
-                                                        style="display: inline-block; width: 0px; height: 4.014em;"></span></span><span
-                                                    style="position: absolute; top: -3.848em; left: 0.27em;"><span
-                                                        class="mi" id="MathJax-Span-146"
-                                                        style="font-size: 70.7%; font-family: STIXGeneral-Italic;">i</span><span
-                                                        style="display: inline-block; width: 0px; height: 4.014em;"></span></span></span></span></span><span
-                                        style="display: inline-block; width: 0px; height: 2.356em;"></span></span></span><span
-                                style="display: inline-block; overflow: hidden; vertical-align: -0.326em; border-left: 0px solid; width: 0px; height: 1.253em;"></span></span>
-                        and scalar values
-                        <span class="math" id="MathJax-Span-147" style="width: 0.858em; display: inline-block;"><span
-                                style="display: inline-block; position: relative; width: 0.698em; height: 0px; font-size: 123%;"><span
-                                    style="position: absolute; clip: rect(1.768em, 1000.7em, 2.677em, -999.997em); top: -2.351em; left: 0em;"><span
-                                        class="mrow" id="MathJax-Span-148"><span class="msubsup"
-                                            id="MathJax-Span-149"><span
-                                                style="display: inline-block; position: relative; width: 0.698em; height: 0px;"><span
-                                                    style="position: absolute; clip: rect(3.426em, 1000.43em, 4.175em, -999.997em); top: -4.009em; left: 0em;"><span
-                                                        class="mi" id="MathJax-Span-150"
-                                                        style="font-family: STIXGeneral-Italic;">v</span><span
-                                                        style="display: inline-block; width: 0px; height: 4.014em;"></span></span><span
-                                                    style="position: absolute; top: -3.848em; left: 0.431em;"><span
-                                                        class="mi" id="MathJax-Span-151"
-                                                        style="font-size: 70.7%; font-family: STIXGeneral-Italic;">i</span><span
-                                                        style="display: inline-block; width: 0px; height: 4.014em;"></span></span></span></span></span><span
-                                        style="display: inline-block; width: 0px; height: 2.356em;"></span></span></span><span
-                                style="display: inline-block; overflow: hidden; vertical-align: -0.26em; border-left: 0px solid; width: 0px; height: 0.859em;"></span></span>.
-                        Written in a form that includes our trained generator G, this soft-constrained optimization
-                        <span class="MathJax" id="MathJax-Element-16-Frame" tabindex="0"
-                            data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><mi>G</mi></math>"
-                            role="presentation" style="position: relative;">
-                            <nobr aria-hidden="true"><span class="math" id="MathJax-Span-152"
-                                    style="width: 0.965em; display: inline-block;"><span
-                                        style="display: inline-block; position: relative; width: 0.751em; height: 0px; font-size: 123%;"><span
-                                            style="position: absolute; clip: rect(1.768em, 1000.75em, 2.731em, -999.997em); top: -2.565em; left: 0em;"><span
-                                                class="mrow" id="MathJax-Span-153"><span class="mi"
-                                                    id="MathJax-Span-154"
-                                                    style="font-family: STIXGeneral-Italic;">G</span></span><span
-                                                style="display: inline-block; width: 0px; height: 2.57em;"></span></span></span><span
-                                        style="display: inline-block; overflow: hidden; vertical-align: -0.063em; border-left: 0px solid; width: 0px; height: 0.99em;"></span></span>
-                            </nobr><span class="MJX_Assistive_MathML" role="presentation"><math
-                                    xmlns="http://www.w3.org/1998/Math/MathML">
-
-                                </math></span>
-                        </span>
-                        problem is:
-                        <br><br>
-                    <div class="MathJax_Display" style="text-align: center;"><span class="MathJax"
-                            id="MathJax-Element-17-Frame" tabindex="0"
-                            data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot; display=&quot;block&quot;><msup><mi>z</mi><mo>&amp;#x2217;</mo></msup><mo>=</mo><msub><mi>arg min</mi><mrow class=&quot;MJX-TeXAtom-ORD&quot;><mi>z</mi></mrow></msub><mo>&amp;#x2061;</mo><munder><mo>&amp;#x2211;</mo><mi>i</mi></munder><mrow class=&quot;MJX-TeXAtom-ORD&quot;><mo stretchy=&quot;false&quot;>|</mo></mrow><mrow class=&quot;MJX-TeXAtom-ORD&quot;><mo stretchy=&quot;false&quot;>|</mo></mrow><msub><mi>f</mi><mi>i</mi></msub><mo stretchy=&quot;false&quot;>(</mo><mi>G</mi><mo stretchy=&quot;false&quot;>(</mo><mi>z</mi><mo stretchy=&quot;false&quot;>)</mo><mo stretchy=&quot;false&quot;>)</mo><mo>&amp;#x2212;</mo><msub><mi>v</mi><mi>i</mi></msub><mrow class=&quot;MJX-TeXAtom-ORD&quot;><mo stretchy=&quot;false&quot;>|</mo></mrow><msub><mrow class=&quot;MJX-TeXAtom-ORD&quot;><mo stretchy=&quot;false&quot;>|</mo></mrow><mn>1</mn></msub><mo>.</mo></math>"
-                            role="presentation" style="text-align: center; position: relative;">
-                            <nobr aria-hidden="true"><span class="math" id="MathJax-Span-155"
-                                    style="width: 17.493em; display: inline-block;"><span
-                                        style="display: inline-block; position: relative; width: 14.23em; height: 0px; font-size: 123%;"><span
-                                            style="position: absolute; clip: rect(1.447em, 1014.18em, 4.014em, -999.997em); top: -2.565em; left: 0em;"><span
-                                                class="mrow" id="MathJax-Span-156"><span class="msubsup"
-                                                    id="MathJax-Span-157"><span
-                                                        style="display: inline-block; position: relative; width: 0.858em; height: 0px;"><span
-                                                            style="position: absolute; clip: rect(3.426em, 1000.38em, 4.282em, -999.997em); top: -4.009em; left: 0em;"><span
-                                                                class="mi" id="MathJax-Span-158"
-                                                                style="font-family: STIXGeneral-Italic;">z</span><span
-                                                                style="display: inline-block; width: 0px; height: 4.014em;"></span></span><span
-                                                            style="position: absolute; top: -4.437em; left: 0.377em;"><span
-                                                                class="mo" id="MathJax-Span-159"
-                                                                style="font-size: 70.7%; font-family: STIXGeneral-Regular;">∗</span><span
-                                                                style="display: inline-block; width: 0px; height: 4.014em;"></span></span></span></span><span
-                                                    class="mo" id="MathJax-Span-160"
-                                                    style="font-family: STIXGeneral-Regular; padding-left: 0.324em;">=</span><span
-                                                    class="msubsup" id="MathJax-Span-161"
-                                                    style="padding-left: 0.324em;"><span
-                                                        style="display: inline-block; position: relative; width: 3.426em; height: 0px;"><span
-                                                            style="position: absolute; clip: rect(3.158em, 1003.05em, 4.389em, -999.997em); top: -4.009em; left: 0em;"><span
-                                                                class="mi" id="MathJax-Span-162"
-                                                                style="font-family: STIXGeneral-Regular;">arg
-                                                                min</span><span
-                                                                style="display: inline-block; width: 0px; height: 4.014em;"></span></span><span
-                                                            style="position: absolute; top: -3.741em; left: 3.105em;"><span
-                                                                class="texatom" id="MathJax-Span-163"><span class="mrow"
-                                                                    id="MathJax-Span-164"><span class="mi"
-                                                                        id="MathJax-Span-165"
-                                                                        style="font-size: 70.7%; font-family: STIXGeneral-Italic;">z</span></span></span><span
-                                                                style="display: inline-block; width: 0px; height: 4.014em;"></span></span></span></span><span
-                                                    class="mo" id="MathJax-Span-166"></span><span class="munderover"
-                                                    id="MathJax-Span-167" style="padding-left: 0.217em;"><span
-                                                        style="display: inline-block; position: relative; width: 1.286em; height: 0px;"><span
-                                                            style="position: absolute; clip: rect(2.891em, 1001.18em, 4.656em, -999.997em); top: -4.009em; left: 0em;"><span
-                                                                class="mo" id="MathJax-Span-168"
-                                                                style="font-family: STIXSizeOneSym; vertical-align: -0.532em;">∑</span><span
-                                                                style="display: inline-block; width: 0px; height: 4.014em;"></span></span><span
-                                                            style="position: absolute; clip: rect(3.372em, 1000.16em, 4.282em, -999.997em); top: -2.832em; left: 0.538em;"><span
-                                                                class="mi" id="MathJax-Span-169"
-                                                                style="font-size: 70.7%; font-family: STIXGeneral-Italic;">i</span><span
-                                                                style="display: inline-block; width: 0px; height: 4.014em;"></span></span></span></span><span
-                                                    class="texatom" id="MathJax-Span-170"
-                                                    style="padding-left: 0.217em;"><span class="mrow"
-                                                        id="MathJax-Span-171"><span class="mo" id="MathJax-Span-172"
-                                                            style="font-family: STIXVariants;">|</span></span></span><span
-                                                    class="texatom" id="MathJax-Span-173"><span class="mrow"
-                                                        id="MathJax-Span-174"><span class="mo" id="MathJax-Span-175"
-                                                            style="font-family: STIXVariants;">|</span></span></span><span
-                                                    class="msubsup" id="MathJax-Span-176"><span
-                                                        style="display: inline-block; position: relative; width: 0.538em; height: 0px;"><span
-                                                            style="position: absolute; clip: rect(3.158em, 1000.43em, 4.389em, -999.997em); top: -4.009em; left: 0em;"><span
-                                                                class="mi" id="MathJax-Span-177"
-                                                                style="font-family: STIXGeneral-Italic;">f<span
-                                                                    style="display: inline-block; overflow: hidden; height: 1px; width: 0.163em;"></span></span><span
-                                                                style="display: inline-block; width: 0px; height: 4.014em;"></span></span><span
-                                                            style="position: absolute; top: -3.848em; left: 0.27em;"><span
-                                                                class="mi" id="MathJax-Span-178"
-                                                                style="font-size: 70.7%; font-family: STIXGeneral-Italic;">i</span><span
-                                                                style="display: inline-block; width: 0px; height: 4.014em;"></span></span></span></span><span
-                                                    class="mo" id="MathJax-Span-179"
-                                                    style="font-family: STIXGeneral-Regular;">(</span><span class="mi"
-                                                    id="MathJax-Span-180"
-                                                    style="font-family: STIXGeneral-Italic;">G</span><span class="mo"
-                                                    id="MathJax-Span-181"
-                                                    style="font-family: STIXGeneral-Regular;">(</span><span class="mi"
-                                                    id="MathJax-Span-182"
-                                                    style="font-family: STIXGeneral-Italic;">z</span><span class="mo"
-                                                    id="MathJax-Span-183"
-                                                    style="font-family: STIXGeneral-Regular;">)</span><span class="mo"
-                                                    id="MathJax-Span-184"
-                                                    style="font-family: STIXGeneral-Regular;">)</span><span class="mo"
-                                                    id="MathJax-Span-185"
-                                                    style="font-family: STIXGeneral-Regular; padding-left: 0.27em;">−</span><span
-                                                    class="msubsup" id="MathJax-Span-186"
-                                                    style="padding-left: 0.27em;"><span
-                                                        style="display: inline-block; position: relative; width: 0.698em; height: 0px;"><span
-                                                            style="position: absolute; clip: rect(3.426em, 1000.43em, 4.175em, -999.997em); top: -4.009em; left: 0em;"><span
-                                                                class="mi" id="MathJax-Span-187"
-                                                                style="font-family: STIXGeneral-Italic;">v</span><span
-                                                                style="display: inline-block; width: 0px; height: 4.014em;"></span></span><span
-                                                            style="position: absolute; top: -3.848em; left: 0.431em;"><span
-                                                                class="mi" id="MathJax-Span-188"
-                                                                style="font-size: 70.7%; font-family: STIXGeneral-Italic;">i</span><span
-                                                                style="display: inline-block; width: 0px; height: 4.014em;"></span></span></span></span><span
-                                                    class="texatom" id="MathJax-Span-189"><span class="mrow"
-                                                        id="MathJax-Span-190"><span class="mo" id="MathJax-Span-191"
-                                                            style="font-family: STIXVariants;">|</span></span></span><span
-                                                    class="msubsup" id="MathJax-Span-192"><span
-                                                        style="display: inline-block; position: relative; width: 0.751em; height: 0px;"><span
-                                                            style="position: absolute; clip: rect(3.158em, 1000.22em, 4.389em, -999.997em); top: -4.009em; left: 0em;"><span
-                                                                class="texatom" id="MathJax-Span-193"><span class="mrow"
-                                                                    id="MathJax-Span-194"><span class="mo"
-                                                                        id="MathJax-Span-195"
-                                                                        style="font-family: STIXVariants;">|</span></span></span><span
-                                                                style="display: inline-block; width: 0px; height: 4.014em;"></span></span><span
-                                                            style="position: absolute; top: -3.795em; left: 0.324em;"><span
-                                                                class="mn" id="MathJax-Span-196"
-                                                                style="font-size: 70.7%; font-family: STIXGeneral-Regular;">1</span><span
-                                                                style="display: inline-block; width: 0px; height: 4.014em;"></span></span></span></span><span
-                                                    class="mo" id="MathJax-Span-197"
-                                                    style="font-family: STIXGeneral-Regular;">.</span></span><span
-                                                style="display: inline-block; width: 0px; height: 2.57em;"></span></span></span><span
-                                        style="display: inline-block; overflow: hidden; vertical-align: -1.641em; border-left: 0px solid; width: 0px; height: 2.898em;"></span></span>
-                            </nobr><span class="MJX_Assistive_MathML MJX_Assistive_MathML_Block"
-                                role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
-
-                                </math></span>
-                        </span></div>
-                    </p>
-                    <p>
-                        Given a user color scribble, we would like GAN to fill in the details. Say we have a hand-drawn
-                        scribble image <span class="MathJax_Preview" style="color: inherit; display: none;"></span><span
-                            class="MathJax" id="MathJax-Element-18-Frame" tabindex="0"
-                            data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><mi>s</mi><mo>&amp;#x2208;</mo><msup><mrow class=&quot;MJX-TeXAtom-ORD&quot;><mi mathvariant=&quot;double-struck&quot;>R</mi></mrow><mi>d</mi></msup></math>"
-                            role="presentation" style="position: relative;">
-                            <nobr aria-hidden="true"><span class="math" id="MathJax-Span-198"
-                                    style="width: 3.586em; display: inline-block;"><span
-                                        style="display: inline-block; position: relative; width: 2.891em; height: 0px; font-size: 123%;"><span
-                                            style="position: absolute; clip: rect(1.554em, 1002.89em, 2.784em, -999.997em); top: -2.565em; left: 0em;"><span
-                                                class="mrow" id="MathJax-Span-199"><span class="mi"
-                                                    id="MathJax-Span-200"
-                                                    style="font-family: STIXGeneral-Italic;">s</span><span class="mo"
-                                                    id="MathJax-Span-201"
-                                                    style="font-family: STIXGeneral-Regular; padding-left: 0.324em;">∈</span><span
-                                                    class="msubsup" id="MathJax-Span-202"
-                                                    style="padding-left: 0.324em;"><span
-                                                        style="display: inline-block; position: relative; width: 1.179em; height: 0px;"><span
-                                                            style="position: absolute; clip: rect(3.212em, 1000.7em, 4.175em, -999.997em); top: -4.009em; left: 0em;"><span
-                                                                class="texatom" id="MathJax-Span-203"><span class="mrow"
-                                                                    id="MathJax-Span-204"><span class="mi"
-                                                                        id="MathJax-Span-205"
-                                                                        style="font-family: STIXGeneral-Regular;">ℝ</span></span></span><span
-                                                                style="display: inline-block; width: 0px; height: 4.014em;"></span></span><span
-                                                            style="position: absolute; top: -4.383em; left: 0.751em;"><span
-                                                                class="mi" id="MathJax-Span-206"
-                                                                style="font-size: 70.7%; font-family: STIXGeneral-Italic;">d<span
-                                                                    style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span><span
-                                                                style="display: inline-block; width: 0px; height: 4.014em;"></span></span></span></span></span><span
-                                                style="display: inline-block; width: 0px; height: 2.57em;"></span></span></span><span
-                                        style="display: inline-block; overflow: hidden; vertical-align: -0.128em; border-left: 0px solid; width: 0px; height: 1.253em;"></span></span>
-                            </nobr><span class="MJX_Assistive_MathML" role="presentation"><math
-                                    xmlns="http://www.w3.org/1998/Math/MathML">
+                            </math></span>
+                    </span></div>
+                </p>
+                <p>
+                    Given a user color scribble, we would like GAN to fill in the details. Say we have a hand-drawn
+                    scribble image <span class="MathJax_Preview" style="color: inherit; display: none;"></span><span
+                        class="MathJax" id="MathJax-Element-18-Frame" tabindex="0"
+                        data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><mi>s</mi><mo>&amp;#x2208;</mo><msup><mrow class=&quot;MJX-TeXAtom-ORD&quot;><mi mathvariant=&quot;double-struck&quot;>R</mi></mrow><mi>d</mi></msup></math>"
+                        role="presentation" style="position: relative;">
+                        <nobr aria-hidden="true"><span class="math" id="MathJax-Span-198"
+                                style="width: 3.586em; display: inline-block;"><span
+                                    style="display: inline-block; position: relative; width: 2.891em; height: 0px; font-size: 123%;"><span
+                                        style="position: absolute; clip: rect(1.554em, 1002.89em, 2.784em, -999.997em); top: -2.565em; left: 0em;"><span
+                                            class="mrow" id="MathJax-Span-199"><span class="mi" id="MathJax-Span-200"
+                                                style="font-family: STIXGeneral-Italic;">s</span><span class="mo"
+                                                id="MathJax-Span-201"
+                                                style="font-family: STIXGeneral-Regular; padding-left: 0.324em;">∈</span><span
+                                                class="msubsup" id="MathJax-Span-202"
+                                                style="padding-left: 0.324em;"><span
+                                                    style="display: inline-block; position: relative; width: 1.179em; height: 0px;"><span
+                                                        style="position: absolute; clip: rect(3.212em, 1000.7em, 4.175em, -999.997em); top: -4.009em; left: 0em;"><span
+                                                            class="texatom" id="MathJax-Span-203"><span class="mrow"
+                                                                id="MathJax-Span-204"><span class="mi"
+                                                                    id="MathJax-Span-205"
+                                                                    style="font-family: STIXGeneral-Regular;">ℝ</span></span></span><span
+                                                            style="display: inline-block; width: 0px; height: 4.014em;"></span></span><span
+                                                        style="position: absolute; top: -4.383em; left: 0.751em;"><span
+                                                            class="mi" id="MathJax-Span-206"
+                                                            style="font-size: 70.7%; font-family: STIXGeneral-Italic;">d<span
+                                                                style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span><span
+                                                            style="display: inline-block; width: 0px; height: 4.014em;"></span></span></span></span></span><span
+                                            style="display: inline-block; width: 0px; height: 2.57em;"></span></span></span><span
+                                    style="display: inline-block; overflow: hidden; vertical-align: -0.128em; border-left: 0px solid; width: 0px; height: 1.253em;"></span></span>
+                        </nobr><span class="MJX_Assistive_MathML" role="presentation"><math
+                                xmlns="http://www.w3.org/1998/Math/MathML">
 
 
-                                </math></span>
-                        </span>
-                        <script type="math/tex" id="MathJax-Element-18">s \in \R^d</script> with a corresponding mask
-                        <span class="MathJax_Preview" style="color: inherit; display: none;"></span><span
-                            class="MathJax" id="MathJax-Element-19-Frame" tabindex="0"
-                            data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><mi>m</mi><mo>&amp;#x2208;</mo><msup><mrow class=&quot;MJX-TeXAtom-ORD&quot;><mn>0</mn><mo>,</mo><mn>1</mn></mrow><mi>d</mi></msup></math>"
-                            role="presentation" style="position: relative;">
-                            <nobr aria-hidden="true"><span class="math" id="MathJax-Span-207"
-                                    style="width: 4.87em; display: inline-block;"><span
-                                        style="display: inline-block; position: relative; width: 3.961em; height: 0px; font-size: 123%;"><span
-                                            style="position: absolute; clip: rect(1.5em, 1003.96em, 2.891em, -999.997em); top: -2.565em; left: 0em;"><span
-                                                class="mrow" id="MathJax-Span-208"><span class="mi"
-                                                    id="MathJax-Span-209"
-                                                    style="font-family: STIXGeneral-Italic;">m</span><span class="mo"
-                                                    id="MathJax-Span-210"
-                                                    style="font-family: STIXGeneral-Regular; padding-left: 0.324em;">∈</span><span
-                                                    class="msubsup" id="MathJax-Span-211"
-                                                    style="padding-left: 0.324em;"><span
-                                                        style="display: inline-block; position: relative; width: 1.928em; height: 0px;"><span
-                                                            style="position: absolute; clip: rect(3.158em, 1001.34em, 4.335em, -999.997em); top: -4.009em; left: 0em;"><span
-                                                                class="texatom" id="MathJax-Span-212"><span class="mrow"
-                                                                    id="MathJax-Span-213"><span class="mn"
-                                                                        id="MathJax-Span-214"
-                                                                        style="font-family: STIXGeneral-Regular;">0</span><span
-                                                                        class="mo" id="MathJax-Span-215"
-                                                                        style="font-family: STIXGeneral-Regular;">,</span><span
-                                                                        class="mn" id="MathJax-Span-216"
-                                                                        style="font-family: STIXGeneral-Regular; padding-left: 0.217em;">1</span></span></span><span
-                                                                style="display: inline-block; width: 0px; height: 4.014em;"></span></span><span
-                                                            style="position: absolute; top: -4.437em; left: 1.447em;"><span
-                                                                class="mi" id="MathJax-Span-217"
-                                                                style="font-size: 70.7%; font-family: STIXGeneral-Italic;">d<span
-                                                                    style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span><span
-                                                                style="display: inline-block; width: 0px; height: 4.014em;"></span></span></span></span></span><span
-                                                style="display: inline-block; width: 0px; height: 2.57em;"></span></span></span><span
-                                        style="display: inline-block; overflow: hidden; vertical-align: -0.26em; border-left: 0px solid; width: 0px; height: 1.385em;"></span></span>
-                            </nobr><span class="MJX_Assistive_MathML" role="presentation"><math
-                                    xmlns="http://www.w3.org/1998/Math/MathML">
+                            </math></span>
+                    </span>
+                    <script type="math/tex" id="MathJax-Element-18">s \in \R^d</script> with a corresponding mask
+                    <span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax"
+                        id="MathJax-Element-19-Frame" tabindex="0"
+                        data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><mi>m</mi><mo>&amp;#x2208;</mo><msup><mrow class=&quot;MJX-TeXAtom-ORD&quot;><mn>0</mn><mo>,</mo><mn>1</mn></mrow><mi>d</mi></msup></math>"
+                        role="presentation" style="position: relative;">
+                        <nobr aria-hidden="true"><span class="math" id="MathJax-Span-207"
+                                style="width: 4.87em; display: inline-block;"><span
+                                    style="display: inline-block; position: relative; width: 3.961em; height: 0px; font-size: 123%;"><span
+                                        style="position: absolute; clip: rect(1.5em, 1003.96em, 2.891em, -999.997em); top: -2.565em; left: 0em;"><span
+                                            class="mrow" id="MathJax-Span-208"><span class="mi" id="MathJax-Span-209"
+                                                style="font-family: STIXGeneral-Italic;">m</span><span class="mo"
+                                                id="MathJax-Span-210"
+                                                style="font-family: STIXGeneral-Regular; padding-left: 0.324em;">∈</span><span
+                                                class="msubsup" id="MathJax-Span-211"
+                                                style="padding-left: 0.324em;"><span
+                                                    style="display: inline-block; position: relative; width: 1.928em; height: 0px;"><span
+                                                        style="position: absolute; clip: rect(3.158em, 1001.34em, 4.335em, -999.997em); top: -4.009em; left: 0em;"><span
+                                                            class="texatom" id="MathJax-Span-212"><span class="mrow"
+                                                                id="MathJax-Span-213"><span class="mn"
+                                                                    id="MathJax-Span-214"
+                                                                    style="font-family: STIXGeneral-Regular;">0</span><span
+                                                                    class="mo" id="MathJax-Span-215"
+                                                                    style="font-family: STIXGeneral-Regular;">,</span><span
+                                                                    class="mn" id="MathJax-Span-216"
+                                                                    style="font-family: STIXGeneral-Regular; padding-left: 0.217em;">1</span></span></span><span
+                                                            style="display: inline-block; width: 0px; height: 4.014em;"></span></span><span
+                                                        style="position: absolute; top: -4.437em; left: 1.447em;"><span
+                                                            class="mi" id="MathJax-Span-217"
+                                                            style="font-size: 70.7%; font-family: STIXGeneral-Italic;">d<span
+                                                                style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span><span
+                                                            style="display: inline-block; width: 0px; height: 4.014em;"></span></span></span></span></span><span
+                                            style="display: inline-block; width: 0px; height: 2.57em;"></span></span></span><span
+                                    style="display: inline-block; overflow: hidden; vertical-align: -0.26em; border-left: 0px solid; width: 0px; height: 1.385em;"></span></span>
+                        </nobr><span class="MJX_Assistive_MathML" role="presentation"><math
+                                xmlns="http://www.w3.org/1998/Math/MathML">
 
-                                </math></span>
-                        </span>
-                        <script type="math/tex" id="MathJax-Element-19">m \in {0, 1}^d</script>. Then for each pixel in
-                        the mask, we can add a constraint that the corresponding pixel in the generated image must be
-                        equal to the sketch, which might look like <span class="MathJax_Preview"
-                            style="color: inherit; display: none;"></span><span class="MathJax"
-                            id="MathJax-Element-20-Frame" tabindex="0"
-                            data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><msub><mi>m</mi><mi>i</mi></msub><msub><mi>x</mi><mi>i</mi></msub><mo>=</mo><msub><mi>m</mi><mi>i</mi></msub><msub><mi>s</mi><mi>i</mi></msub></math>"
-                            role="presentation" style="position: relative;">
-                            <nobr aria-hidden="true"><span class="math" id="MathJax-Span-218"
-                                    style="width: 5.833em; display: inline-block;"><span
-                                        style="display: inline-block; position: relative; width: 4.71em; height: 0px; font-size: 123%;"><span
-                                            style="position: absolute; clip: rect(1.982em, 1004.71em, 2.891em, -999.997em); top: -2.565em; left: 0em;"><span
-                                                class="mrow" id="MathJax-Span-219"><span class="msubsup"
-                                                    id="MathJax-Span-220"><span
-                                                        style="display: inline-block; position: relative; width: 1.019em; height: 0px;"><span
-                                                            style="position: absolute; clip: rect(3.426em, 1000.7em, 4.175em, -999.997em); top: -4.009em; left: 0em;"><span
-                                                                class="mi" id="MathJax-Span-221"
-                                                                style="font-family: STIXGeneral-Italic;">m</span><span
-                                                                style="display: inline-block; width: 0px; height: 4.014em;"></span></span><span
-                                                            style="position: absolute; top: -3.848em; left: 0.698em;"><span
-                                                                class="mi" id="MathJax-Span-222"
-                                                                style="font-size: 70.7%; font-family: STIXGeneral-Italic;">i</span><span
-                                                                style="display: inline-block; width: 0px; height: 4.014em;"></span></span></span></span><span
-                                                    class="msubsup" id="MathJax-Span-223"><span
-                                                        style="display: inline-block; position: relative; width: 0.698em; height: 0px;"><span
-                                                            style="position: absolute; clip: rect(3.426em, 1000.43em, 4.175em, -999.997em); top: -4.009em; left: 0em;"><span
-                                                                class="mi" id="MathJax-Span-224"
-                                                                style="font-family: STIXGeneral-Italic;">x<span
-                                                                    style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span><span
-                                                                style="display: inline-block; width: 0px; height: 4.014em;"></span></span><span
-                                                            style="position: absolute; top: -3.848em; left: 0.431em;"><span
-                                                                class="mi" id="MathJax-Span-225"
-                                                                style="font-size: 70.7%; font-family: STIXGeneral-Italic;">i</span><span
-                                                                style="display: inline-block; width: 0px; height: 4.014em;"></span></span></span></span><span
-                                                    class="mo" id="MathJax-Span-226"
-                                                    style="font-family: STIXGeneral-Regular; padding-left: 0.324em;">=</span><span
-                                                    class="msubsup" id="MathJax-Span-227"
-                                                    style="padding-left: 0.324em;"><span
-                                                        style="display: inline-block; position: relative; width: 1.019em; height: 0px;"><span
-                                                            style="position: absolute; clip: rect(3.426em, 1000.7em, 4.175em, -999.997em); top: -4.009em; left: 0em;"><span
-                                                                class="mi" id="MathJax-Span-228"
-                                                                style="font-family: STIXGeneral-Italic;">m</span><span
-                                                                style="display: inline-block; width: 0px; height: 4.014em;"></span></span><span
-                                                            style="position: absolute; top: -3.848em; left: 0.698em;"><span
-                                                                class="mi" id="MathJax-Span-229"
-                                                                style="font-size: 70.7%; font-family: STIXGeneral-Italic;">i</span><span
-                                                                style="display: inline-block; width: 0px; height: 4.014em;"></span></span></span></span><span
-                                                    class="msubsup" id="MathJax-Span-230"><span
-                                                        style="display: inline-block; position: relative; width: 0.645em; height: 0px;"><span
-                                                            style="position: absolute; clip: rect(3.426em, 1000.38em, 4.175em, -999.997em); top: -4.009em; left: 0em;"><span
-                                                                class="mi" id="MathJax-Span-231"
-                                                                style="font-family: STIXGeneral-Italic;">s</span><span
-                                                                style="display: inline-block; width: 0px; height: 4.014em;"></span></span><span
-                                                            style="position: absolute; top: -3.848em; left: 0.377em;"><span
-                                                                class="mi" id="MathJax-Span-232"
-                                                                style="font-size: 70.7%; font-family: STIXGeneral-Italic;">i</span><span
-                                                                style="display: inline-block; width: 0px; height: 4.014em;"></span></span></span></span></span><span
-                                                style="display: inline-block; width: 0px; height: 2.57em;"></span></span></span><span
-                                        style="display: inline-block; overflow: hidden; vertical-align: -0.26em; border-left: 0px solid; width: 0px; height: 0.859em;"></span></span>
-                            </nobr><span class="MJX_Assistive_MathML" role="presentation"><math
-                                    xmlns="http://www.w3.org/1998/Math/MathML">
+                            </math></span>
+                    </span>
+                    <script type="math/tex" id="MathJax-Element-19">m \in {0, 1}^d</script>. Then for each pixel in
+                    the mask, we can add a constraint that the corresponding pixel in the generated image must be
+                    equal to the sketch, which might look like <span class="MathJax_Preview"
+                        style="color: inherit; display: none;"></span><span class="MathJax"
+                        id="MathJax-Element-20-Frame" tabindex="0"
+                        data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><msub><mi>m</mi><mi>i</mi></msub><msub><mi>x</mi><mi>i</mi></msub><mo>=</mo><msub><mi>m</mi><mi>i</mi></msub><msub><mi>s</mi><mi>i</mi></msub></math>"
+                        role="presentation" style="position: relative;">
+                        <nobr aria-hidden="true"><span class="math" id="MathJax-Span-218"
+                                style="width: 5.833em; display: inline-block;"><span
+                                    style="display: inline-block; position: relative; width: 4.71em; height: 0px; font-size: 123%;"><span
+                                        style="position: absolute; clip: rect(1.982em, 1004.71em, 2.891em, -999.997em); top: -2.565em; left: 0em;"><span
+                                            class="mrow" id="MathJax-Span-219"><span class="msubsup"
+                                                id="MathJax-Span-220"><span
+                                                    style="display: inline-block; position: relative; width: 1.019em; height: 0px;"><span
+                                                        style="position: absolute; clip: rect(3.426em, 1000.7em, 4.175em, -999.997em); top: -4.009em; left: 0em;"><span
+                                                            class="mi" id="MathJax-Span-221"
+                                                            style="font-family: STIXGeneral-Italic;">m</span><span
+                                                            style="display: inline-block; width: 0px; height: 4.014em;"></span></span><span
+                                                        style="position: absolute; top: -3.848em; left: 0.698em;"><span
+                                                            class="mi" id="MathJax-Span-222"
+                                                            style="font-size: 70.7%; font-family: STIXGeneral-Italic;">i</span><span
+                                                            style="display: inline-block; width: 0px; height: 4.014em;"></span></span></span></span><span
+                                                class="msubsup" id="MathJax-Span-223"><span
+                                                    style="display: inline-block; position: relative; width: 0.698em; height: 0px;"><span
+                                                        style="position: absolute; clip: rect(3.426em, 1000.43em, 4.175em, -999.997em); top: -4.009em; left: 0em;"><span
+                                                            class="mi" id="MathJax-Span-224"
+                                                            style="font-family: STIXGeneral-Italic;">x<span
+                                                                style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span><span
+                                                            style="display: inline-block; width: 0px; height: 4.014em;"></span></span><span
+                                                        style="position: absolute; top: -3.848em; left: 0.431em;"><span
+                                                            class="mi" id="MathJax-Span-225"
+                                                            style="font-size: 70.7%; font-family: STIXGeneral-Italic;">i</span><span
+                                                            style="display: inline-block; width: 0px; height: 4.014em;"></span></span></span></span><span
+                                                class="mo" id="MathJax-Span-226"
+                                                style="font-family: STIXGeneral-Regular; padding-left: 0.324em;">=</span><span
+                                                class="msubsup" id="MathJax-Span-227"
+                                                style="padding-left: 0.324em;"><span
+                                                    style="display: inline-block; position: relative; width: 1.019em; height: 0px;"><span
+                                                        style="position: absolute; clip: rect(3.426em, 1000.7em, 4.175em, -999.997em); top: -4.009em; left: 0em;"><span
+                                                            class="mi" id="MathJax-Span-228"
+                                                            style="font-family: STIXGeneral-Italic;">m</span><span
+                                                            style="display: inline-block; width: 0px; height: 4.014em;"></span></span><span
+                                                        style="position: absolute; top: -3.848em; left: 0.698em;"><span
+                                                            class="mi" id="MathJax-Span-229"
+                                                            style="font-size: 70.7%; font-family: STIXGeneral-Italic;">i</span><span
+                                                            style="display: inline-block; width: 0px; height: 4.014em;"></span></span></span></span><span
+                                                class="msubsup" id="MathJax-Span-230"><span
+                                                    style="display: inline-block; position: relative; width: 0.645em; height: 0px;"><span
+                                                        style="position: absolute; clip: rect(3.426em, 1000.38em, 4.175em, -999.997em); top: -4.009em; left: 0em;"><span
+                                                            class="mi" id="MathJax-Span-231"
+                                                            style="font-family: STIXGeneral-Italic;">s</span><span
+                                                            style="display: inline-block; width: 0px; height: 4.014em;"></span></span><span
+                                                        style="position: absolute; top: -3.848em; left: 0.377em;"><span
+                                                            class="mi" id="MathJax-Span-232"
+                                                            style="font-size: 70.7%; font-family: STIXGeneral-Italic;">i</span><span
+                                                            style="display: inline-block; width: 0px; height: 4.014em;"></span></span></span></span></span><span
+                                            style="display: inline-block; width: 0px; height: 2.57em;"></span></span></span><span
+                                    style="display: inline-block; overflow: hidden; vertical-align: -0.26em; border-left: 0px solid; width: 0px; height: 0.859em;"></span></span>
+                        </nobr><span class="MJX_Assistive_MathML" role="presentation"><math
+                                xmlns="http://www.w3.org/1998/Math/MathML">
 
-                                </math></span>.
-                        </span>
-                        Since our color scribble constraints are all elementwise, we can reduce the above equation under
-                        our constraints to
-                    <div class="MathJax_Display" style="text-align: center;"><span class="MathJax"
-                            id="MathJax-Element-21-Frame" tabindex="0"
-                            data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot; display=&quot;block&quot;><msup><mi>z</mi><mo>&amp;#x2217;</mo></msup><mo>=</mo><msub><mi>arg min</mi><mi>z</mi></msub><mo>&amp;#x2061;</mo><mrow class=&quot;MJX-TeXAtom-ORD&quot;><mo stretchy=&quot;false&quot;>|</mo></mrow><mrow class=&quot;MJX-TeXAtom-ORD&quot;><mo stretchy=&quot;false&quot;>|</mo></mrow><mi>M</mi><mo>&amp;#x2217;</mo><mi>G</mi><mo stretchy=&quot;false&quot;>(</mo><mi>z</mi><mo stretchy=&quot;false&quot;>)</mo><mo>&amp;#x2212;</mo><mi>M</mi><mo>&amp;#x2217;</mo><mi>S</mi><mrow class=&quot;MJX-TeXAtom-ORD&quot;><mo stretchy=&quot;false&quot;>|</mo></mrow><msub><mrow class=&quot;MJX-TeXAtom-ORD&quot;><mo stretchy=&quot;false&quot;>|</mo></mrow><mn>1</mn></msub><mo>,</mo></math>"
-                            role="presentation" style="text-align: center; position: relative;">
-                            <nobr aria-hidden="true"><span class="math" id="MathJax-Span-233"
-                                    style="width: 18.723em; display: inline-block;"><span
-                                        style="display: inline-block; position: relative; width: 15.193em; height: 0px; font-size: 123%;"><span
-                                            style="position: absolute; clip: rect(1.661em, 1015.14em, 3.051em, -999.997em); top: -2.565em; left: 0em;"><span
-                                                class="mrow" id="MathJax-Span-234"><span class="msubsup"
-                                                    id="MathJax-Span-235"><span
-                                                        style="display: inline-block; position: relative; width: 0.858em; height: 0px;"><span
-                                                            style="position: absolute; clip: rect(3.426em, 1000.38em, 4.282em, -999.997em); top: -4.009em; left: 0em;"><span
-                                                                class="mi" id="MathJax-Span-236"
-                                                                style="font-family: STIXGeneral-Italic;">z</span><span
-                                                                style="display: inline-block; width: 0px; height: 4.014em;"></span></span><span
-                                                            style="position: absolute; top: -4.437em; left: 0.377em;"><span
-                                                                class="mo" id="MathJax-Span-237"
-                                                                style="font-size: 70.7%; font-family: STIXGeneral-Regular;">∗</span><span
-                                                                style="display: inline-block; width: 0px; height: 4.014em;"></span></span></span></span><span
-                                                    class="mo" id="MathJax-Span-238"
-                                                    style="font-family: STIXGeneral-Regular; padding-left: 0.324em;">=</span><span
-                                                    class="msubsup" id="MathJax-Span-239"
-                                                    style="padding-left: 0.324em;"><span
-                                                        style="display: inline-block; position: relative; width: 3.426em; height: 0px;"><span
-                                                            style="position: absolute; clip: rect(3.158em, 1003.05em, 4.389em, -999.997em); top: -4.009em; left: 0em;"><span
-                                                                class="mi" id="MathJax-Span-240"
-                                                                style="font-family: STIXGeneral-Regular;">arg
-                                                                min</span><span
-                                                                style="display: inline-block; width: 0px; height: 4.014em;"></span></span><span
-                                                            style="position: absolute; top: -3.741em; left: 3.105em;"><span
-                                                                class="mi" id="MathJax-Span-241"
-                                                                style="font-size: 70.7%; font-family: STIXGeneral-Italic;">z</span><span
-                                                                style="display: inline-block; width: 0px; height: 4.014em;"></span></span></span></span><span
-                                                    class="mo" id="MathJax-Span-242"></span><span class="texatom"
-                                                    id="MathJax-Span-243" style="padding-left: 0.217em;"><span
-                                                        class="mrow" id="MathJax-Span-244"><span class="mo"
-                                                            id="MathJax-Span-245"
-                                                            style="font-family: STIXVariants;">|</span></span></span><span
-                                                    class="texatom" id="MathJax-Span-246"><span class="mrow"
-                                                        id="MathJax-Span-247"><span class="mo" id="MathJax-Span-248"
-                                                            style="font-family: STIXVariants;">|</span></span></span><span
-                                                    class="mi" id="MathJax-Span-249"
-                                                    style="font-family: STIXGeneral-Italic;">M<span
-                                                        style="display: inline-block; overflow: hidden; height: 1px; width: 0.056em;"></span></span><span
-                                                    class="mo" id="MathJax-Span-250"
-                                                    style="font-family: STIXGeneral-Regular; padding-left: 0.27em;">∗</span><span
-                                                    class="mi" id="MathJax-Span-251"
-                                                    style="font-family: STIXGeneral-Italic; padding-left: 0.27em;">G</span><span
-                                                    class="mo" id="MathJax-Span-252"
-                                                    style="font-family: STIXGeneral-Regular;">(</span><span class="mi"
-                                                    id="MathJax-Span-253"
-                                                    style="font-family: STIXGeneral-Italic;">z</span><span class="mo"
-                                                    id="MathJax-Span-254"
-                                                    style="font-family: STIXGeneral-Regular;">)</span><span class="mo"
-                                                    id="MathJax-Span-255"
-                                                    style="font-family: STIXGeneral-Regular; padding-left: 0.27em;">−</span><span
-                                                    class="mi" id="MathJax-Span-256"
-                                                    style="font-family: STIXGeneral-Italic; padding-left: 0.27em;">M<span
-                                                        style="display: inline-block; overflow: hidden; height: 1px; width: 0.056em;"></span></span><span
-                                                    class="mo" id="MathJax-Span-257"
-                                                    style="font-family: STIXGeneral-Regular; padding-left: 0.27em;">∗</span><span
-                                                    class="mi" id="MathJax-Span-258"
-                                                    style="font-family: STIXGeneral-Italic; padding-left: 0.27em;">S<span
-                                                        style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span><span
-                                                    class="texatom" id="MathJax-Span-259"><span class="mrow"
-                                                        id="MathJax-Span-260"><span class="mo" id="MathJax-Span-261"
-                                                            style="font-family: STIXVariants;">|</span></span></span><span
-                                                    class="msubsup" id="MathJax-Span-262"><span
-                                                        style="display: inline-block; position: relative; width: 0.751em; height: 0px;"><span
-                                                            style="position: absolute; clip: rect(3.158em, 1000.22em, 4.389em, -999.997em); top: -4.009em; left: 0em;"><span
-                                                                class="texatom" id="MathJax-Span-263"><span class="mrow"
-                                                                    id="MathJax-Span-264"><span class="mo"
-                                                                        id="MathJax-Span-265"
-                                                                        style="font-family: STIXVariants;">|</span></span></span><span
-                                                                style="display: inline-block; width: 0px; height: 4.014em;"></span></span><span
-                                                            style="position: absolute; top: -3.795em; left: 0.324em;"><span
-                                                                class="mn" id="MathJax-Span-266"
-                                                                style="font-size: 70.7%; font-family: STIXGeneral-Regular;">1</span><span
-                                                                style="display: inline-block; width: 0px; height: 4.014em;"></span></span></span></span><span
-                                                    class="mo" id="MathJax-Span-267"
-                                                    style="font-family: STIXGeneral-Regular;">,</span></span><span
-                                                style="display: inline-block; width: 0px; height: 2.57em;"></span></span></span><span
-                                        style="display: inline-block; overflow: hidden; vertical-align: -0.457em; border-left: 0px solid; width: 0px; height: 1.451em;"></span></span>
-                            </nobr><span class="MJX_Assistive_MathML MJX_Assistive_MathML_Block"
-                                role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+                            </math></span>.
+                    </span>
+                    Since our color scribble constraints are all elementwise, we can reduce the above equation under
+                    our constraints to
+                <div class="MathJax_Display" style="text-align: center;"><span class="MathJax"
+                        id="MathJax-Element-21-Frame" tabindex="0"
+                        data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot; display=&quot;block&quot;><msup><mi>z</mi><mo>&amp;#x2217;</mo></msup><mo>=</mo><msub><mi>arg min</mi><mi>z</mi></msub><mo>&amp;#x2061;</mo><mrow class=&quot;MJX-TeXAtom-ORD&quot;><mo stretchy=&quot;false&quot;>|</mo></mrow><mrow class=&quot;MJX-TeXAtom-ORD&quot;><mo stretchy=&quot;false&quot;>|</mo></mrow><mi>M</mi><mo>&amp;#x2217;</mo><mi>G</mi><mo stretchy=&quot;false&quot;>(</mo><mi>z</mi><mo stretchy=&quot;false&quot;>)</mo><mo>&amp;#x2212;</mo><mi>M</mi><mo>&amp;#x2217;</mo><mi>S</mi><mrow class=&quot;MJX-TeXAtom-ORD&quot;><mo stretchy=&quot;false&quot;>|</mo></mrow><msub><mrow class=&quot;MJX-TeXAtom-ORD&quot;><mo stretchy=&quot;false&quot;>|</mo></mrow><mn>1</mn></msub><mo>,</mo></math>"
+                        role="presentation" style="text-align: center; position: relative;">
+                        <nobr aria-hidden="true"><span class="math" id="MathJax-Span-233"
+                                style="width: 18.723em; display: inline-block;"><span
+                                    style="display: inline-block; position: relative; width: 15.193em; height: 0px; font-size: 123%;"><span
+                                        style="position: absolute; clip: rect(1.661em, 1015.14em, 3.051em, -999.997em); top: -2.565em; left: 0em;"><span
+                                            class="mrow" id="MathJax-Span-234"><span class="msubsup"
+                                                id="MathJax-Span-235"><span
+                                                    style="display: inline-block; position: relative; width: 0.858em; height: 0px;"><span
+                                                        style="position: absolute; clip: rect(3.426em, 1000.38em, 4.282em, -999.997em); top: -4.009em; left: 0em;"><span
+                                                            class="mi" id="MathJax-Span-236"
+                                                            style="font-family: STIXGeneral-Italic;">z</span><span
+                                                            style="display: inline-block; width: 0px; height: 4.014em;"></span></span><span
+                                                        style="position: absolute; top: -4.437em; left: 0.377em;"><span
+                                                            class="mo" id="MathJax-Span-237"
+                                                            style="font-size: 70.7%; font-family: STIXGeneral-Regular;">∗</span><span
+                                                            style="display: inline-block; width: 0px; height: 4.014em;"></span></span></span></span><span
+                                                class="mo" id="MathJax-Span-238"
+                                                style="font-family: STIXGeneral-Regular; padding-left: 0.324em;">=</span><span
+                                                class="msubsup" id="MathJax-Span-239"
+                                                style="padding-left: 0.324em;"><span
+                                                    style="display: inline-block; position: relative; width: 3.426em; height: 0px;"><span
+                                                        style="position: absolute; clip: rect(3.158em, 1003.05em, 4.389em, -999.997em); top: -4.009em; left: 0em;"><span
+                                                            class="mi" id="MathJax-Span-240"
+                                                            style="font-family: STIXGeneral-Regular;">arg
+                                                            min</span><span
+                                                            style="display: inline-block; width: 0px; height: 4.014em;"></span></span><span
+                                                        style="position: absolute; top: -3.741em; left: 3.105em;"><span
+                                                            class="mi" id="MathJax-Span-241"
+                                                            style="font-size: 70.7%; font-family: STIXGeneral-Italic;">z</span><span
+                                                            style="display: inline-block; width: 0px; height: 4.014em;"></span></span></span></span><span
+                                                class="mo" id="MathJax-Span-242"></span><span class="texatom"
+                                                id="MathJax-Span-243" style="padding-left: 0.217em;"><span class="mrow"
+                                                    id="MathJax-Span-244"><span class="mo" id="MathJax-Span-245"
+                                                        style="font-family: STIXVariants;">|</span></span></span><span
+                                                class="texatom" id="MathJax-Span-246"><span class="mrow"
+                                                    id="MathJax-Span-247"><span class="mo" id="MathJax-Span-248"
+                                                        style="font-family: STIXVariants;">|</span></span></span><span
+                                                class="mi" id="MathJax-Span-249"
+                                                style="font-family: STIXGeneral-Italic;">M<span
+                                                    style="display: inline-block; overflow: hidden; height: 1px; width: 0.056em;"></span></span><span
+                                                class="mo" id="MathJax-Span-250"
+                                                style="font-family: STIXGeneral-Regular; padding-left: 0.27em;">∗</span><span
+                                                class="mi" id="MathJax-Span-251"
+                                                style="font-family: STIXGeneral-Italic; padding-left: 0.27em;">G</span><span
+                                                class="mo" id="MathJax-Span-252"
+                                                style="font-family: STIXGeneral-Regular;">(</span><span class="mi"
+                                                id="MathJax-Span-253"
+                                                style="font-family: STIXGeneral-Italic;">z</span><span class="mo"
+                                                id="MathJax-Span-254"
+                                                style="font-family: STIXGeneral-Regular;">)</span><span class="mo"
+                                                id="MathJax-Span-255"
+                                                style="font-family: STIXGeneral-Regular; padding-left: 0.27em;">−</span><span
+                                                class="mi" id="MathJax-Span-256"
+                                                style="font-family: STIXGeneral-Italic; padding-left: 0.27em;">M<span
+                                                    style="display: inline-block; overflow: hidden; height: 1px; width: 0.056em;"></span></span><span
+                                                class="mo" id="MathJax-Span-257"
+                                                style="font-family: STIXGeneral-Regular; padding-left: 0.27em;">∗</span><span
+                                                class="mi" id="MathJax-Span-258"
+                                                style="font-family: STIXGeneral-Italic; padding-left: 0.27em;">S<span
+                                                    style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span><span
+                                                class="texatom" id="MathJax-Span-259"><span class="mrow"
+                                                    id="MathJax-Span-260"><span class="mo" id="MathJax-Span-261"
+                                                        style="font-family: STIXVariants;">|</span></span></span><span
+                                                class="msubsup" id="MathJax-Span-262"><span
+                                                    style="display: inline-block; position: relative; width: 0.751em; height: 0px;"><span
+                                                        style="position: absolute; clip: rect(3.158em, 1000.22em, 4.389em, -999.997em); top: -4.009em; left: 0em;"><span
+                                                            class="texatom" id="MathJax-Span-263"><span class="mrow"
+                                                                id="MathJax-Span-264"><span class="mo"
+                                                                    id="MathJax-Span-265"
+                                                                    style="font-family: STIXVariants;">|</span></span></span><span
+                                                            style="display: inline-block; width: 0px; height: 4.014em;"></span></span><span
+                                                        style="position: absolute; top: -3.795em; left: 0.324em;"><span
+                                                            class="mn" id="MathJax-Span-266"
+                                                            style="font-size: 70.7%; font-family: STIXGeneral-Regular;">1</span><span
+                                                            style="display: inline-block; width: 0px; height: 4.014em;"></span></span></span></span><span
+                                                class="mo" id="MathJax-Span-267"
+                                                style="font-family: STIXGeneral-Regular;">,</span></span><span
+                                            style="display: inline-block; width: 0px; height: 2.57em;"></span></span></span><span
+                                    style="display: inline-block; overflow: hidden; vertical-align: -0.457em; border-left: 0px solid; width: 0px; height: 1.451em;"></span></span>
+                        </nobr><span class="MJX_Assistive_MathML MJX_Assistive_MathML_Block" role="presentation"><math
+                                xmlns="http://www.w3.org/1998/Math/MathML" display="block">
 
-                                </math></span>
-                        </span></div>
-                    </p>
-                    <p>where <span class="MathJax_Preview" style="color: inherit; display: none;"></span><span
-                            class="MathJax" id="MathJax-Element-22-Frame" tabindex="0"
-                            data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><mo>&amp;#x2217;</mo></math>"
-                            role="presentation" style="position: relative;">
-                            <nobr aria-hidden="true"><span class="math" id="MathJax-Span-268"
-                                    style="width: 0.698em; display: inline-block;"><span
-                                        style="display: inline-block; position: relative; width: 0.538em; height: 0px; font-size: 123%;"><span
-                                            style="position: absolute; clip: rect(1.928em, 1000.48em, 2.677em, -999.997em); top: -2.565em; left: 0em;"><span
-                                                class="mrow" id="MathJax-Span-269"><span class="mo"
-                                                    id="MathJax-Span-270"
-                                                    style="font-family: STIXGeneral-Regular;">∗</span></span><span
-                                                style="display: inline-block; width: 0px; height: 2.57em;"></span></span></span><span
-                                        style="display: inline-block; overflow: hidden; vertical-align: 0.003em; border-left: 0px solid; width: 0px; height: 0.661em;"></span></span>
-                            </nobr><span class="MJX_Assistive_MathML" role="presentation"><math
-                                    xmlns="http://www.w3.org/1998/Math/MathML">
+                            </math></span>
+                    </span></div>
+                </p>
+                <p>where <span class="MathJax_Preview" style="color: inherit; display: none;"></span><span
+                        class="MathJax" id="MathJax-Element-22-Frame" tabindex="0"
+                        data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><mo>&amp;#x2217;</mo></math>"
+                        role="presentation" style="position: relative;">
+                        <nobr aria-hidden="true"><span class="math" id="MathJax-Span-268"
+                                style="width: 0.698em; display: inline-block;"><span
+                                    style="display: inline-block; position: relative; width: 0.538em; height: 0px; font-size: 123%;"><span
+                                        style="position: absolute; clip: rect(1.928em, 1000.48em, 2.677em, -999.997em); top: -2.565em; left: 0em;"><span
+                                            class="mrow" id="MathJax-Span-269"><span class="mo" id="MathJax-Span-270"
+                                                style="font-family: STIXGeneral-Regular;">∗</span></span><span
+                                            style="display: inline-block; width: 0px; height: 2.57em;"></span></span></span><span
+                                    style="display: inline-block; overflow: hidden; vertical-align: 0.003em; border-left: 0px solid; width: 0px; height: 0.661em;"></span></span>
+                        </nobr><span class="MJX_Assistive_MathML" role="presentation"><math
+                                xmlns="http://www.w3.org/1998/Math/MathML">
 
-                                </math></span>
-                        </span>
-                        <script type="math/tex" id="MathJax-Element-22">*</script> is the Hadamard product, <span
-                            class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax"
-                            id="MathJax-Element-23-Frame" tabindex="0"
-                            data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><mi>M</mi></math>"
-                            role="presentation" style="position: relative;">
-                            <nobr aria-hidden="true"><span class="math" id="MathJax-Span-271"
-                                    style="width: 1.126em; display: inline-block;"><span
-                                        style="display: inline-block; position: relative; width: 0.912em; height: 0px; font-size: 123%;"><span
-                                            style="position: absolute; clip: rect(1.768em, 1000.91em, 2.731em, -999.997em); top: -2.565em; left: 0em;"><span
-                                                class="mrow" id="MathJax-Span-272"><span class="mi"
-                                                    id="MathJax-Span-273"
-                                                    style="font-family: STIXGeneral-Italic;">M<span
-                                                        style="display: inline-block; overflow: hidden; height: 1px; width: 0.056em;"></span></span></span><span
-                                                style="display: inline-block; width: 0px; height: 2.57em;"></span></span></span><span
-                                        style="display: inline-block; overflow: hidden; vertical-align: -0.063em; border-left: 0px solid; width: 0px; height: 0.924em;"></span></span>
-                            </nobr><span class="MJX_Assistive_MathML" role="presentation"><math
-                                    xmlns="http://www.w3.org/1998/Math/MathML">
+                            </math></span>
+                    </span>
+                    <script type="math/tex" id="MathJax-Element-22">*</script> is the Hadamard product, <span
+                        class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax"
+                        id="MathJax-Element-23-Frame" tabindex="0"
+                        data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><mi>M</mi></math>"
+                        role="presentation" style="position: relative;">
+                        <nobr aria-hidden="true"><span class="math" id="MathJax-Span-271"
+                                style="width: 1.126em; display: inline-block;"><span
+                                    style="display: inline-block; position: relative; width: 0.912em; height: 0px; font-size: 123%;"><span
+                                        style="position: absolute; clip: rect(1.768em, 1000.91em, 2.731em, -999.997em); top: -2.565em; left: 0em;"><span
+                                            class="mrow" id="MathJax-Span-272"><span class="mi" id="MathJax-Span-273"
+                                                style="font-family: STIXGeneral-Italic;">M<span
+                                                    style="display: inline-block; overflow: hidden; height: 1px; width: 0.056em;"></span></span></span><span
+                                            style="display: inline-block; width: 0px; height: 2.57em;"></span></span></span><span
+                                    style="display: inline-block; overflow: hidden; vertical-align: -0.063em; border-left: 0px solid; width: 0px; height: 0.924em;"></span></span>
+                        </nobr><span class="MJX_Assistive_MathML" role="presentation"><math
+                                xmlns="http://www.w3.org/1998/Math/MathML">
 
-                                </math></span>
-                        </span>
-                        <script type="math/tex" id="MathJax-Element-23">M</script> is the mask, and <span
-                            class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax"
-                            id="MathJax-Element-24-Frame" tabindex="0"
-                            data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><mi>S</mi></math>"
-                            role="presentation" style="position: relative;">
-                            <nobr aria-hidden="true"><span class="math" id="MathJax-Span-274"
-                                    style="width: 0.591em; display: inline-block;"><span
-                                        style="display: inline-block; position: relative; width: 0.484em; height: 0px; font-size: 123%;"><span
-                                            style="position: absolute; clip: rect(1.768em, 1000.48em, 2.731em, -999.997em); top: -2.565em; left: 0em;"><span
-                                                class="mrow" id="MathJax-Span-275"><span class="mi"
-                                                    id="MathJax-Span-276"
-                                                    style="font-family: STIXGeneral-Italic;">S<span
-                                                        style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span></span><span
-                                                style="display: inline-block; width: 0px; height: 2.57em;"></span></span></span><span
-                                        style="display: inline-block; overflow: hidden; vertical-align: -0.063em; border-left: 0px solid; width: 0px; height: 0.99em;"></span></span>
-                            </nobr><span class="MJX_Assistive_MathML" role="presentation"><math
-                                    xmlns="http://www.w3.org/1998/Math/MathML">
+                            </math></span>
+                    </span>
+                    <script type="math/tex" id="MathJax-Element-23">M</script> is the mask, and <span
+                        class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax"
+                        id="MathJax-Element-24-Frame" tabindex="0"
+                        data-mathml="<math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;><mi>S</mi></math>"
+                        role="presentation" style="position: relative;">
+                        <nobr aria-hidden="true"><span class="math" id="MathJax-Span-274"
+                                style="width: 0.591em; display: inline-block;"><span
+                                    style="display: inline-block; position: relative; width: 0.484em; height: 0px; font-size: 123%;"><span
+                                        style="position: absolute; clip: rect(1.768em, 1000.48em, 2.731em, -999.997em); top: -2.565em; left: 0em;"><span
+                                            class="mrow" id="MathJax-Span-275"><span class="mi" id="MathJax-Span-276"
+                                                style="font-family: STIXGeneral-Italic;">S<span
+                                                    style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span></span><span
+                                            style="display: inline-block; width: 0px; height: 2.57em;"></span></span></span><span
+                                    style="display: inline-block; overflow: hidden; vertical-align: -0.063em; border-left: 0px solid; width: 0px; height: 0.99em;"></span></span>
+                        </nobr><span class="MJX_Assistive_MathML" role="presentation"><math
+                                xmlns="http://www.w3.org/1998/Math/MathML">
 
-                                </math></span>
-                        </span>
-                        <script type="math/tex" id="MathJax-Element-24">S</script> is the sketch
-                    </p>
+                            </math></span>
+                    </span>
+                    <script type="math/tex" id="MathJax-Element-24">S</script> is the sketch. For the results bellow, we
+                    have used a perceptual loss weight of 0.05 and L1 loss of 5.
                     <br><br>
-                    <div class="container row col-12 align-self-center p-0 m-0">
+                </p>
+                <br><br>
+                <div class="container row col-12 align-self-center p-0 m-0">
 
+                    <div class="container col-12 align-self-center p-0 m-0">
+                        <div class="row  align-self-center p-0 m-0 ">
+                            <div class="col-1 p-0 m-0"></div>
+                            <div class="col p-0 m-0">
+                                <img src="images/editing/draw/mask0.png"
+                                    class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                <figcaption>Sketch</figcaption>
+                            </div>
+                            <div class="col p-0 m-0">
+                                <img src="images/editing/draw/output0.png"
+                                    class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                <figcaption>Embedded image </figcaption>
+                            </div>
+                            <div class="col-1 p-0 m-0"></div>
+                            <div class="col p-0 m-0">
+                                <img src="images/editing/draw/mask5.png"
+                                    class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                <figcaption>Sketch</figcaption>
+                            </div>
+                            <div class="col p-0 m-0">
+                                <img src="images/editing/draw/output5.png"
+                                    class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                <figcaption>Embedded image</figcaption>
+                                <div class="col-1 p-0 m-0"></div>
+                            </div>
+                            <div class="col-1 p-0 m-0"></div>
+                        </div>
+                        <br>
                         <div class="container col-12 align-self-center p-0 m-0">
                             <div class="row  align-self-center p-0 m-0 ">
                                 <div class="col-1 p-0 m-0"></div>
                                 <div class="col p-0 m-0">
-                                    <img src="images/editing/draw/mask0.png"
+                                    <img src="images/editing/draw/mask6.png"
                                         class=' d-block float-top mx-auto d-block img-fluid col-11'>
                                     <figcaption>Sketch</figcaption>
                                 </div>
                                 <div class="col p-0 m-0">
-                                    <img src="images/editing/draw/output0.png"
+                                    <img src="images/editing/draw/output6.png"
                                         class=' d-block float-top mx-auto d-block img-fluid col-11'>
                                     <figcaption>Embedded image </figcaption>
                                 </div>
                                 <div class="col-1 p-0 m-0"></div>
+
                                 <div class="col p-0 m-0">
-                                    <img src="images/editing/draw/mask5.png"
+                                    <img src="images/editing/draw/mask3.png"
                                         class=' d-block float-top mx-auto d-block img-fluid col-11'>
                                     <figcaption>Sketch</figcaption>
                                 </div>
                                 <div class="col p-0 m-0">
-                                    <img src="images/editing/draw/output5.png"
+                                    <img src="images/editing/draw/output3.png"
                                         class=' d-block float-top mx-auto d-block img-fluid col-11'>
                                     <figcaption>Embedded image</figcaption>
                                     <div class="col-1 p-0 m-0"></div>
-                                </div>
+                                </div>Í
                                 <div class="col-1 p-0 m-0"></div>
+                            </div>
+                        </div>
+                        <br><br><br>
+                        <h2>Image Editing</h2>
+                        <br><br>
+                        <p>
+                            Similar to in previous section, we will use the perceptual and pixel loss to edit an
+                            images. However, in this case we will embed the initial image in the latent space and
+                            then apply the sketch to edit it. In the following images some of the results of this image
+                            editing are shown. This images have been optained using conv_4 layer to calculate the loss.
+                            We can observe how some of the colors in the sketches are not present in the GAN latent
+                            space and therefore the output images, so similar colors, but not the same ones.
+
+
+                        </p>
+                        <br><br>
+                        <div class="container row col-12 align-self-center p-0 m-0">
+
+                            <div class="container col-12 align-self-center p-0 m-0">
+                                <div class="row  align-self-center p-0 m-0 ">
+                                    <div class="col-2 p-0 m-0"></div>
+                                    <div class="col p-0 m-0">
+                                        <img src="images/editing/draw/init0.png"
+                                            class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                        <figcaption>Initial image </figcaption>
+                                    </div>
+                                    <div class="col p-0 m-0">
+                                        <img src="images/editing/draw/mask0.png"
+                                            class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                        <figcaption>Sketch </figcaption>
+                                    </div>
+
+                                    <div class="col p-0 m-0">
+                                        <img src="images/editing/draw/draw2_.png"
+                                            class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                        <figcaption>Result</figcaption>
+                                    </div>
+
+                                    <div class="col-2 p-0 m-0"></div>
+                                </div>
+
+                            </div>
+                            <br>
+
+
+                            <div class="container col-12 align-self-center p-0 m-0">
+                                <div class="row  align-self-center p-0 m-0 ">
+                                    <div class="col-2 p-0 m-0"></div>
+                                    <div class="col p-0 m-0">
+                                        <img src="images/editing/draw/initi2.png"
+                                            class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                        <figcaption>Initial image </figcaption>
+                                    </div>
+                                    <div class="col p-0 m-0">
+                                        <img src="images/editing/draw/maskkk.png"
+                                            class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                        <figcaption>Sketch </figcaption>
+                                    </div>
+
+                                    <div class="col p-0 m-0">
+                                        <img src="images/editing/draw/output----.png"
+                                            class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                        <figcaption>Result</figcaption>
+                                    </div>
+
+                                    <div class="col-2 p-0 m-0"></div>
+                                </div>
+
                             </div>
                             <br>
                             <div class="container col-12 align-self-center p-0 m-0">
                                 <div class="row  align-self-center p-0 m-0 ">
-                                    <div class="col-1 p-0 m-0"></div>
+                                    <div class="col-2 p-0 m-0"></div>
+                                    <div class="col p-0 m-0">
+                                        <img src="images/editing/draw/init0.png"
+                                            class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                        <figcaption>Initial image </figcaption>
+                                    </div>
                                     <div class="col p-0 m-0">
                                         <img src="images/editing/draw/mask6.png"
                                             class=' d-block float-top mx-auto d-block img-fluid col-11'>
-                                        <figcaption>Sketch</figcaption>
+                                        <figcaption>Sketch </figcaption>
                                     </div>
-                                    <div class="col p-0 m-0">
-                                        <img src="images/editing/draw/output6.png"
-                                            class=' d-block float-top mx-auto d-block img-fluid col-11'>
-                                        <figcaption>Embedded image </figcaption>
-                                    </div>
-                                    <div class="col-1 p-0 m-0"></div>
 
                                     <div class="col p-0 m-0">
-                                        <img src="images/editing/draw/mask3.png"
+                                        <img src="images/editing/draw/drawww.png"
                                             class=' d-block float-top mx-auto d-block img-fluid col-11'>
-                                        <figcaption>Sketch</figcaption>
+                                        <figcaption>Result</figcaption>
                                     </div>
-                                    <div class="col p-0 m-0">
-                                        <img src="images/editing/draw/output3.png"
-                                            class=' d-block float-top mx-auto d-block img-fluid col-11'>
-                                        <figcaption>Embedded image</figcaption>
-                                        <div class="col-1 p-0 m-0"></div>
-                                    </div>Í
-                                    <div class="col-1 p-0 m-0"></div>
+
+                                    <div class="col-2 p-0 m-0"></div>
                                 </div>
+
                             </div>
+
+                            <br>
+                            <div class="container col-12 align-self-center p-0 m-0">
+                                <div class="row  align-self-center p-0 m-0 ">
+                                    <div class="col-2 p-0 m-0"></div>
+                                    <div class="col p-0 m-0">
+                                        <img src="images/editing/draw/init66.png"
+                                            class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                        <figcaption>Initial image </figcaption>
+                                    </div>
+                                    <div class="col p-0 m-0">
+                                        <img src="images/editing/draw/mask66.png"
+                                            class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                        <figcaption>Sketch </figcaption>
+                                    </div>
+
+                                    <div class="col p-0 m-0">
+                                        <img src="images/editing/draw/output66.png"
+                                            class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                        <figcaption>Result</figcaption>
+                                    </div>
+
+                                    <div class="col-2 p-0 m-0"></div>
+                                </div>
+
+                            </div>
+
+
+                            <br>
+
+                            <div class="container col-12 align-self-center p-0 m-0">
+                                <div class="row  align-self-center p-0 m-0 ">
+                                    <div class="col-2 p-0 m-0"></div>
+                                    <div class="col p-0 m-0">
+                                        <img src="images/editing/draw/init0.png"
+                                            class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                        <figcaption>Initial image </figcaption>
+                                    </div>
+                                    <div class="col p-0 m-0">
+                                        <img src="images/editing/draw/mask7.png"
+                                            class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                        <figcaption>Sketch </figcaption>
+                                    </div>
+
+                                    <div class="col p-0 m-0">
+                                        <img src="images/editing/draw/draw1.png"
+                                            class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                        <figcaption>Result</figcaption>
+                                    </div>
+
+                                    <div class="col-2 p-0 m-0"></div>
+                                </div>
+
+                            </div>
+
+                            <br>
+
+
+                            <div class="container col-12 align-self-center p-0 m-0">
+                                <div class="row  align-self-center p-0 m-0 ">
+                                    <div class="col-2 p-0 m-0"></div>
+                                    <div class="col p-0 m-0">
+                                        <img src="images/editing/draw/init66.png"
+                                            class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                        <figcaption>Initial image </figcaption>
+                                    </div>
+                                    <div class="col p-0 m-0">
+                                        <img src="images/editing/draw/mask55.png"
+                                            class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                        <figcaption>Sketch </figcaption>
+                                    </div>
+
+                                    <div class="col p-0 m-0">
+                                        <img src="images/editing/draw/output55.png"
+                                            class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                        <figcaption>Result</figcaption>
+                                    </div>
+
+                                    <div class="col-2 p-0 m-0"></div>
+                                </div>
+
+                                <br>
+
+
+
+
+                            </div>
+                            </div>
+
+                            <br><br><br> 
+                            <h2>Bells & Whistles </h2>
                             <br><br><br>
-                            <h2>Image Editing</h2>
+                            <h3>High Resolution Grumpy Cats</h3>
                             <br><br>
-                            <p>
-                                Similar to in previous section, we will use the perceptual and pixel loss to edit an
-                                images. However, in this case we will embed the initial image in the latent space and
-                                then apply the sketch to edit it. 
-                                <br><br><br>CONv_4<br>Color present in the GAN latent space.
-                            </p>
+                            
+                            <p>We used a higher resolution GAN to generate out more detailed grumpy cats and their interpolations! Here are
+                                the results:</p>
                             <br><br>
-                            <div class="container row col-12 align-self-center p-0 m-0">
+                        
+                            <div class="container col-12 align-self-center p-0 m-0">
 
                                 <div class="container col-12 align-self-center p-0 m-0">
+
                                     <div class="row  align-self-center p-0 m-0 ">
-                                        <div class="col-2 p-0 m-0"></div>
                                         <div class="col p-0 m-0">
-                                            <img src="images/editing/draw/init0.png"
+                                            <img src="images/editing/interpolateHR/original_image_0.png"
                                                 class=' d-block float-top mx-auto d-block img-fluid col-11'>
-                                            <figcaption>Initial image </figcaption>
+                                            <figcaption>Original image A</figcaption>
                                         </div>
                                         <div class="col p-0 m-0">
-                                            <img src="images/editing/draw/mask0.png"
+                                            <img src="images/editing/interpolateHR/reconstruction_0_stylegan256_w+.png"
                                                 class=' d-block float-top mx-auto d-block img-fluid col-11'>
-                                            <figcaption>Sketch </figcaption>
+                                            <figcaption>Embedded image A</figcaption>
                                         </div>
-
+                                        <div class="col-12 col-sm p-0 m-0">
+                                            <img src="images/editing/interpolateHR/1_stylegan256_w+.gif"
+                                                class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                            <figcaption>Interpolation</figcaption>
+                                        </div>
                                         <div class="col p-0 m-0">
-                                            <img src="images/editing/draw/draw2_.png"
+                                            <img src="images/editing/interpolateHR/reconstruction_1_stylegan256_w+.png"
                                                 class=' d-block float-top mx-auto d-block img-fluid col-11'>
-                                            <figcaption>Result</figcaption>
+                                            <figcaption>Embedded image B</figcaption>
                                         </div>
-
-                                        <div class="col-2 p-0 m-0"></div>
+                                        <div class="col p-0 m-0">
+                                            <img src="images/editing/interpolateHR/original_image_1.png"
+                                                class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                            <figcaption>Original image B</figcaption>
+                                        </div>
                                     </div>
-
-                                </div>
-                                <br>
-
-
-                                <div class="container col-12 align-self-center p-0 m-0">
-                                    <div class="row  align-self-center p-0 m-0 ">
-                                        <div class="col-2 p-0 m-0"></div>
-                                        <div class="col p-0 m-0">
-                                            <img src="images/editing/draw/initi2.png"
-                                                class=' d-block float-top mx-auto d-block img-fluid col-11'>
-                                            <figcaption>Initial image </figcaption>
-                                        </div>
-                                        <div class="col p-0 m-0">
-                                            <img src="images/editing/draw/maskkk.png"
-                                                class=' d-block float-top mx-auto d-block img-fluid col-11'>
-                                            <figcaption>Sketch </figcaption>
-                                        </div>
-
-                                        <div class="col p-0 m-0">
-                                            <img src="images/editing/draw/output----.png"
-                                                class=' d-block float-top mx-auto d-block img-fluid col-11'>
-                                            <figcaption>Result</figcaption>
-                                        </div>
-
-                                        <div class="col-2 p-0 m-0"></div>
-                                    </div>
-
-                                </div>
-                                <br>
-                                <div class="container col-12 align-self-center p-0 m-0">
-                                    <div class="row  align-self-center p-0 m-0 ">
-                                        <div class="col-2 p-0 m-0"></div>
-                                        <div class="col p-0 m-0">
-                                            <img src="images/editing/draw/init0.png"
-                                                class=' d-block float-top mx-auto d-block img-fluid col-11'>
-                                            <figcaption>Initial image </figcaption>
-                                        </div>
-                                        <div class="col p-0 m-0">
-                                            <img src="images/editing/draw/mask6.png"
-                                                class=' d-block float-top mx-auto d-block img-fluid col-11'>
-                                            <figcaption>Sketch </figcaption>
-                                        </div>
-
-                                        <div class="col p-0 m-0">
-                                            <img src="images/editing/draw/drawww.png"
-                                                class=' d-block float-top mx-auto d-block img-fluid col-11'>
-                                            <figcaption>Result</figcaption>
-                                        </div>
-
-                                        <div class="col-2 p-0 m-0"></div>
-                                    </div>
-
-                                </div>
-
-                                <br>
-                                <div class="container col-12 align-self-center p-0 m-0">
-                                    <div class="row  align-self-center p-0 m-0 ">
-                                        <div class="col-2 p-0 m-0"></div>
-                                        <div class="col p-0 m-0">
-                                            <img src="images/editing/draw/init66.png"
-                                                class=' d-block float-top mx-auto d-block img-fluid col-11'>
-                                            <figcaption>Initial image </figcaption>
-                                        </div>
-                                        <div class="col p-0 m-0">
-                                            <img src="images/editing/draw/mask66.png"
-                                                class=' d-block float-top mx-auto d-block img-fluid col-11'>
-                                            <figcaption>Sketch </figcaption>
-                                        </div>
-
-                                        <div class="col p-0 m-0">
-                                            <img src="images/editing/draw/output66.png"
-                                                class=' d-block float-top mx-auto d-block img-fluid col-11'>
-                                            <figcaption>Result</figcaption>
-                                        </div>
-
-                                        <div class="col-2 p-0 m-0"></div>
-                                    </div>
-
-                                </div>
-
-                                
-                                <br>
-
-                                <div class="container col-12 align-self-center p-0 m-0">
-                                    <div class="row  align-self-center p-0 m-0 ">
-                                        <div class="col-2 p-0 m-0"></div>
-                                        <div class="col p-0 m-0">
-                                            <img src="images/editing/draw/init0.png"
-                                                class=' d-block float-top mx-auto d-block img-fluid col-11'>
-                                            <figcaption>Initial image </figcaption>
-                                        </div>
-                                        <div class="col p-0 m-0">
-                                            <img src="images/editing/draw/mask7.png"
-                                                class=' d-block float-top mx-auto d-block img-fluid col-11'>
-                                            <figcaption>Sketch </figcaption>
-                                        </div>
-
-                                        <div class="col p-0 m-0">
-                                            <img src="images/editing/draw/draw1.png"
-                                                class=' d-block float-top mx-auto d-block img-fluid col-11'>
-                                            <figcaption>Result</figcaption>
-                                        </div>
-
-                                        <div class="col-2 p-0 m-0"></div>
-                                    </div>
-
-                                </div>
-
-                                <br>
-
-
-                                <div class="container col-12 align-self-center p-0 m-0">
-                                    <div class="row  align-self-center p-0 m-0 ">
-                                        <div class="col-2 p-0 m-0"></div>
-                                        <div class="col p-0 m-0">
-                                            <img src="images/editing/draw/init66.png"
-                                                class=' d-block float-top mx-auto d-block img-fluid col-11'>
-                                            <figcaption>Initial image </figcaption>
-                                        </div>
-                                        <div class="col p-0 m-0">
-                                            <img src="images/editing/draw/mask55.png"
-                                                class=' d-block float-top mx-auto d-block img-fluid col-11'>
-                                            <figcaption>Sketch </figcaption>
-                                        </div>
-
-                                        <div class="col p-0 m-0">
-                                            <img src="images/editing/draw/output55.png"
-                                                class=' d-block float-top mx-auto d-block img-fluid col-11'>
-                                            <figcaption>Result</figcaption>
-                                        </div>
-
-                                        <div class="col-2 p-0 m-0"></div>
-                                    </div>
-
                                     <br>
 
-                                    
+                                    <div class="container col-12 align-self-center p-0 m-0">
 
-                               
+                                        <div class="row  align-self-center p-0 m-0 ">
+                                            <div class="col p-0 m-0">
+                                                <img src="images/editing/interpolateHR/original_image_2.png"
+                                                    class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                                <figcaption>Original image A</figcaption>
+                                            </div>
+                                            <div class="col p-0 m-0">
+                                                <img src="images/editing/interpolateHR/reconstruction_2_stylegan256_w+.png"
+                                                    class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                                <figcaption>Embedded image A</figcaption>
+                                            </div>
+                                            <div class="col-12 col-sm p-0 m-0">
+                                                <img src="images/editing/interpolateHR/3_stylegan256_w+.gif"
+                                                    class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                                <figcaption>Interpolation</figcaption>
+                                            </div>
+                                            <div class="col p-0 m-0">
+                                                <img src="images/editing/interpolateHR/reconstruction_3_stylegan256_w+.png"
+                                                    class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                                <figcaption>Embedded image B</figcaption>
+                                            </div>
+                                            <div class="col p-0 m-0">
+                                                <img src="images/editing/interpolateHR/original_image_3.png"
+                                                    class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                                <figcaption>Original image B</figcaption>
+                                            </div>
+                                        </div>
+                                        <br>
+
+
+                                    </div>
+                                </div>
                             </div>
 
-                            <br><br><br>
-                            <h2>Bells & Whistles </h2>
-                            <br><br>
-                            <h3>High Resolution</h3>
-                            <br><br>
+                            <br><br><br> 
                             <h3>User interface and demo</h3>
-                            <br><br>
+                            <br><br> 
 
+                            <p>
+                                In the following gifs, two possible user interfaces and interaction can be seen. The
+                                user is able to draw the edition sketches and the model optimizes the best image
+                                output that matches the initial image and the edition sketch.
+                            </p>
+                            <br>
 
                             <div class="container col-12 align-self-center p-0 m-0">
                                 <div class="row  align-self-center p-0 m-0 ">
@@ -1198,21 +1277,80 @@
                                     </div>
                                 </div>
                             </div>
-                            <p>Colab link</p>
+                            <br><br><br>
 
 
-                            <h3>Embedding Kim?</h3>
+                            <h3>What about Kim?</h3>
+                            <br><br>
+                            <p>
+                                In the paper <a target="_blank"
+                                    href="https://arxiv.org/pdf/1904.03189.pdf">Image2StyleGAN: How to Embed Images
+                                    Into the
+                                    StyleGAN Latent Space?</a> they embed different image classes on the StyleGan
+                                latent space trained on the FFHQ dataset. They show that the model is capable of
+                                embedding
+                                the images even was not trained on those image classes. On the paper we can seee that
+                                even
+                                these images can be embedded in the latent
+                                space, the interpolation between them leads to images with features of the image class
+                                it was trained with, in their case, faces. We decided to see
+                                what happens with our model when we try to embed images that are not cats. There
+                                couldn't be
+                                another images to be embedded than Kim Kardashian and the Spanish Ecce Omo. On the
+                                following images we can see that, unlike in the paper, our network is not capable or
+                                reconstructing the images. In the
+                                interpolations, as expected, we can also see the cat features that the network has
+                                learned.
+                            </p>
+                            <br><br>
+                            <div class="container col-12 align-self-center p-0 m-0">
+
+                                <div class="container col-12 align-self-center p-0 m-0">
+
+                                    <div class="row  align-self-center p-0 m-0 ">
+                                        <div class="col p-0 m-0">
+                                            <img src="images/editing/kim final ecce omo/original_image_1.png"
+                                                class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                            <figcaption>Original image A</figcaption>
+                                        </div>
+                                        <div class="col p-0 m-0">
+                                            <img src="images/editing/kim final ecce omo/reconstruction_1_stylegan256_w+.png"
+                                                class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                            <figcaption>Embedded image A</figcaption>
+                                        </div>
+                                        <div class="col-12 col-sm p-0 m-0">
+                                            <img src="images/editing/kim final ecce omo/1_stylegan256_w+.gif"
+                                                class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                            <figcaption>Interpolation</figcaption>
+                                        </div>
+                                        <div class="col p-0 m-0">
+                                            <img src="images/editing/kim final ecce omo/reconstruction_0_stylegan256_w+.png"
+                                                class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                            <figcaption>Embedded image B</figcaption>
+                                        </div>
+                                        <div class="col p-0 m-0">
+                                            <img src="images/editing/kim final ecce omo/original_image_0.png"
+                                                class=' d-block float-top mx-auto d-block img-fluid col-11'>
+                                            <figcaption>Original image B</figcaption>
+                                        </div>
+                                    </div>
+                                    <br>
 
 
 
 
-                            <br><br><br><br>
-                            <p class=footer>©Tomas Cabezon Pedroso, 2021</p>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <br><br><br><br><br><br>.
+                    
 
 
 
-                        </div> <!-- end content -->
-                    </div>
+                    </div> <!-- end content -->
+                </div>
 </body>
 
 </html>
